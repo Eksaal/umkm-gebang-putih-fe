@@ -32,7 +32,7 @@ const NavLinks: FC<INavLinkProps> = ({
                 isActive
                     ? activeClassName || 'text-green-700 underline'
                     : inactiveClassName ||
-                          'text-green-500 hover:text-green-600',
+                          'text-green-500 underline-offset-4 hover:text-green-600',
             )}
         >
             {label}

@@ -6,6 +6,7 @@ import { Toaster } from '@/components/ui/toaster'
 import StoreInitializer from '@/store/StoreInitializer'
 import { useAuth } from '@/hooks/useAuth'
 import { unstable_noStore as noStore } from 'next/cache'
+import Navbar from '@/components/shared/Navbar'
 
 const poppins = Poppins({
     subsets: ['latin'],
@@ -36,7 +37,10 @@ export default async function RootLayout({
                 )}
             >
                 <StoreInitializer auth={user} />
-                <main>{children}</main>
+                <main>
+                    <Navbar />
+                    {children}
+                </main>
                 <Toaster />
             </body>
         </html>
