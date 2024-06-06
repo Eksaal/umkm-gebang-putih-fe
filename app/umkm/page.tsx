@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import dynamic from 'next/dynamic'
 
@@ -31,7 +32,7 @@ const locations = latitudes.map((lat, index) => ({
 
 const Home: React.FC = () => {
     return (
-        <div className="ml-40">
+        <div className="w-full">
             <Map locations={locations} />
         </div>
     )

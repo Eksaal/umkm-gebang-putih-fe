@@ -1,97 +1,86 @@
-// @/components/Layout/Sidebar.tsx
-import React from 'react'
-import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+'use client'
+import * as React from 'react'
+import { useState } from 'react'
+import { FaSearch, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
+import Card from '../Card'
 
-import { SlHome } from 'react-icons/sl'
-import { BsInfoSquare, BsEnvelopeAt } from 'react-icons/bs'
-import { FaTshirt, FaRedhat } from 'react-icons/fa'
+interface ISIdebarProps {}
 
-import logo from '@/public/next.svg'
+const Sidebar: React.FunctionComponent<ISIdebarProps> = (props) => {
+    const [searchTerm, setSearchTerm] = useState('')
+    const [isMinimized, setIsMinimized] = useState(false)
 
-interface SidebarProps {
-    show: boolean
-    setter: (value: boolean | ((val: boolean) => boolean)) => void
-}
+    const cardsData = [
+        {
+            name: 'Nama',
+            rating: 4,
+            address:
+                'bantuan promosi agar usaha anda dapat dikenal oleh banyak orang',
+            type: 'Makanan',
+            image: 'homepage/wrung1.png',
+        },
+        {
+            name: 'Warung 2',
+            rating: 5,
+            address: 'bantuan promosi untuk usaha kuliner anda',
+            type: 'Minuman',
+            image: 'homepage/wrung1.png',
+        },
+        {
+            name: 'Warung 3',
+            rating: 3,
+            address: 'promosi bisnis anda dengan efektif',
+            type: 'Minuman',
+            image: 'homepage/wrung1.png',
+        },
+    ]
 
-interface MenuItemProps {
-    icon: React.ReactNode
-    name: string
-    route: string
-}
-
-const Sidebar: React.FC<SidebarProps> = ({ show, setter }) => {
-    const pathname = usePathname()
-    const router = useRouter()
-
-    const className =
-        'bg-black w-[250px] transition-[margin-left] ease-in-out duration-500 fixed  top-0 bottom-0 left-0 '
-    const appendClass = show ? ' ml-0' : ' ml-[-250px] md:ml-0'
-
-    const MenuItem: React.FC<MenuItemProps> = ({ icon, name, route }) => {
-        const colorClass =
-            pathname === route ? 'text-white' : 'text-white/50 hover:text-white'
-
-        return (
-            <Link
-                href={route}
-                onClick={() => {
-                    setter((oldVal) => !oldVal)
-                }}
-                className={`text-md flex gap-1 border-b-[1px] border-b-white/10 py-3 pl-6 [&>*]:my-auto ${colorClass} -z-20`}
-            >
-                <div className="flex w-[30px] text-xl [&>*]:mx-auto">
-                    {icon}
-                </div>
-                <div>{name}</div>
-            </Link>
-        )
-    }
-
-    const ModalOverlay: React.FC = () => (
-        <div
-            className={`fixed bottom-0 left-0 right-0 top-0 z-30 flex bg-black/50 md:hidden`}
-            onClick={() => {
-                setter((oldVal) => !oldVal)
-            }}
-        />
+    const filteredCards = cardsData.filter(
+        (card) =>
+            card.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            card.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            card.type.toLowerCase().includes(searchTerm.toLowerCase()),
     )
 
     return (
-        <>
-            <div className={`${className}${appendClass} -z-30`}>
-                <div className="flex p-2">
-                    <Link href="/">
-                        <img
-                            src={logo.src}
-                            alt="Company Logo"
-                            width={300}
-                            height={300}
+        <div
+            className={`relative flex ${isMinimized ? '' : 'w-[37%'}] flex-col gap-4 px-5 pt-16`}
+        >
+            <button
+                className="top-400 absolute -right-3  top-[50vh] rounded-l-lg bg-green-500  p-2 text-2xl"
+                onClick={() => setIsMinimized(!isMinimized)}
+            >
+                {isMinimized ? (
+                    <FaChevronRight className="text-gray-600" />
+                ) : (
+                    <FaChevronLeft className="text-gray-600" />
+                )}
+            </button>
+            {!isMinimized && (
+                <>
+                    <div className="relative my-4">
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full rounded border border-gray-300 p-2 pl-10"
                         />
-                    </Link>
-                </div>
-                <div className="flex flex-col">
-                    <MenuItem name="Home" route="/" icon={<SlHome />} />
-                    <MenuItem
-                        name="T-Shirts"
-                        route="/t-shirts"
-                        icon={<FaTshirt />}
-                    />
-                    <MenuItem name="Hats" route="/hats" icon={<FaRedhat />} />
-                    <MenuItem
-                        name="About Us"
-                        route="/about"
-                        icon={<BsInfoSquare />}
-                    />
-                    <MenuItem
-                        name="Contact"
-                        route="/contact"
-                        icon={<BsEnvelopeAt />}
-                    />
-                </div>
-            </div>
-            {show ? <ModalOverlay /> : null}
-        </>
+                        <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400" />
+                    </div>
+                    {filteredCards.map((card, index) => (
+                        <Card
+                            key={index}
+                            name={card.name}
+                            rating={card.rating}
+                            address={card.address}
+                            type={card.type}
+                            image={card.image}
+                        />
+                    ))}
+                </>
+            )}
+        </div>
     )
 }
 

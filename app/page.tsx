@@ -2,6 +2,7 @@ import React from 'react'
 import Footer from '@/components/shared/Footer'
 import Image from 'next/image'
 import image from '@/public/homepage/hero.png'
+import Card from '@/components/shared/Card'
 import Link from 'next/link'
 import { BiSolidLike, BiLocationPlus, BiBowlHot } from 'react-icons/bi' // Import the FaHome icon from react-icons
 
@@ -25,7 +26,7 @@ const layanan = [
 
 export default function App() {
     return (
-        <main className="min-h-screen space-y-12 ">
+        <main className="min-h-screen space-y-12 pt-20 ">
             <section className="relative mx-auto max-w-[1180px] pt-10">
                 <Image src={image} alt="hero-image" height={240} width={1180} />
                 <div className="absolute left-10 top-28 text-white">
@@ -76,7 +77,7 @@ export default function App() {
                         </div>
                     ))}
                 </div>
-                <div className="bg-umkm-fruit ove mt-10 flex h-80 items-center justify-center  bg-cover px-60">
+                <div className="ove mt-10 flex h-80 items-center justify-center bg-umkm-fruit  bg-cover px-60">
                     <div className="w-1/3">
                         <Link
                             href="regisumkm"
@@ -97,6 +98,7 @@ export default function App() {
                     </div>
                 </div>
             </section>
+
             <Footer />
         </main>
     )
