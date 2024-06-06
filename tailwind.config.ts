@@ -2,6 +2,7 @@ import type { Config } from 'tailwindcss'
 
 const config = {
     darkMode: ['class'],
+    
     content: [
         './pages/**/*.{ts,tsx}',
         './components/**/*.{ts,tsx}',
@@ -17,7 +18,11 @@ const config = {
                 '2xl': '1400px',
             },
         },
-        extend: {},
+        extend: {
+            backgroundImage: {
+                'umkm-fruit': "url('../public/homepage/bgumkm.png')",
+            }
+        },
     },
     plugins: [require('tailwindcss-animate')],
 } satisfies Config

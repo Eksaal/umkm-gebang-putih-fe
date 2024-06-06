@@ -1,6 +1,8 @@
 import React from 'react'
 import Footer from '@/components/shared/Footer'
 import Image from 'next/image'
+import image from '@/public/homepage/hero.png'
+import Link from 'next/link'
 import { BiSolidLike, BiLocationPlus, BiBowlHot } from 'react-icons/bi' // Import the FaHome icon from react-icons
 
 const layanan = [
@@ -25,12 +27,7 @@ export default function App() {
     return (
         <main className="min-h-screen space-y-12 ">
             <section className="relative mx-auto max-w-[1180px] pt-10">
-                <Image
-                    src="/homepage/hero.png"
-                    alt="hero-image"
-                    height={240}
-                    width={1180}
-                />
+                <Image src={image} alt="hero-image" height={240} width={1180} />
                 <div className="absolute left-10 top-28 text-white">
                     <h2 className="text-5xl font-extrabold">
                         <span className="text-neutral-700">UMKM</span> GEBANG
@@ -78,6 +75,26 @@ export default function App() {
                             <p className="text-center">{service.desc}</p>
                         </div>
                     ))}
+                </div>
+                <div className="bg-umkm-fruit ove mt-10 flex h-80 items-center justify-center  bg-cover px-60">
+                    <div className="w-1/3">
+                        <Link
+                            href="regisumkm"
+                            className="cursor-pointer rounded-full bg-green-100 px-10 py-3 text-xl font-semibold hover:bg-green-300"
+                        >
+                            DAFTARKAN UMKM
+                        </Link>
+                    </div>
+                    <div className="w-2/3 px-10 text-center text-white">
+                        <h3 className="text-5xl font-bold">
+                            Daftarkan UMKM anda!!
+                        </h3>
+                        <p className=" pt-8 text-xl font-semibold">
+                            Daftarkan UMKM anda untuk mendapatkan pelanggan dan
+                            bantuan promosi agar usaha anda dapat dikenal oleh
+                            banyak orang
+                        </p>
+                    </div>
                 </div>
             </section>
             <Footer />
