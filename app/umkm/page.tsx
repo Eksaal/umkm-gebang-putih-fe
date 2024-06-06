@@ -8,7 +8,6 @@ interface Location {
     long: number
 }
 
-// Dynamically import the Map component and define its props
 const Map = dynamic(() => import('@/components/shared/Maps'), {
     ssr: false,
     loading: () => <p>Loading...</p>,
@@ -32,7 +31,7 @@ const locations = latitudes.map((lat, index) => ({
 
 const Home: React.FC = () => {
     return (
-        <div>
+        <div className="ml-40">
             <Map locations={locations} />
         </div>
     )

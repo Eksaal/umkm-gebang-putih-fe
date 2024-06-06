@@ -1,12 +1,7 @@
 import React from 'react'
-import Navbar from '@/components/shared/Navbar'
+import Footer from '@/components/shared/Footer'
 import Image from 'next/image'
-import {
-    BiSolidLike,
-    BiLocationPlus,
-    BiFoodMenu,
-    BiBowlHot,
-} from 'react-icons/bi' // Import the FaHome icon from react-icons
+import { BiSolidLike, BiLocationPlus, BiBowlHot } from 'react-icons/bi' // Import the FaHome icon from react-icons
 
 const layanan = [
     {
@@ -23,11 +18,6 @@ const layanan = [
         name: 'Ulasan',
         desc: 'Anda dapat melihat dan memberi ulasan pada toko',
         icon: <BiSolidLike />,
-    },
-    {
-        name: 'Infografis',
-        desc: 'Khusus mitra terdaftar, terdapat informasi yang berbentuk tabel, dan infografis untuk pemilik UMKM',
-        icon: <BiFoodMenu />,
     },
 ]
 
@@ -73,7 +63,7 @@ export default function App() {
                     Apa yang Anda Dapatkan di sini?
                 </h3>
                 <div className="mx-auto mt-2 h-0.5 w-20 bg-green-400"></div>
-                <div className="grid grid-cols-4 px-[130px] pt-6">
+                <div className="grid grid-cols-3 px-[130px] pt-6">
                     {layanan.map((service, index) => (
                         <div
                             key={index}
@@ -90,6 +80,7 @@ export default function App() {
                     ))}
                 </div>
             </section>
+            <Footer />
         </main>
     )
 }

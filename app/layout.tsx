@@ -7,7 +7,7 @@ import StoreInitializer from '@/store/StoreInitializer'
 import { useAuth } from '@/hooks/useAuth'
 import { unstable_noStore as noStore } from 'next/cache'
 import Navbar from '@/components/shared/Navbar'
-import Footer from '@/components/shared/Footer'
+
 import 'leaflet/dist/leaflet.css'
 
 const poppins = Poppins({
@@ -42,7 +42,6 @@ export default async function RootLayout({
                 <main>
                     <Navbar />
                     {children}
-                    <Footer />
                 </main>
                 <Toaster />
             </body>
