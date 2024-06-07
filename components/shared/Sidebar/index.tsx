@@ -116,7 +116,7 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
                 </div>
             </div>
             <div
-                className={`fixed inset-y-0  mt-32 flex flex-col gap-4 space-y-5 overflow-y-auto bg-white px-5`}
+                className={`overflow-y-autoe fixed  inset-y-0 mt-32 flex flex-col gap-4 space-y-5 px-5`}
                 style={{ maxHeight: 'calc(100vh - 4rem)' }}
             >
                 {filteredCards.length > 0 ? (
