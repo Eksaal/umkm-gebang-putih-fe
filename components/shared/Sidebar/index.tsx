@@ -90,7 +90,7 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
 
     return (
         <div
-            className={`${filteredCards.length < 1 ? '' : 'bg-white'} z-20 min-h-screen min-w-[543px] pt-16`}
+            className={`${filteredCards.length < 1 ? '' : 'bg-white'} z-20 min-h-screen min-w-[543px] `}
         >
             <div className="flex gap-4 px-6">
                 <div className="relative my-4 w-2/3">
@@ -116,7 +116,7 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
                 </div>
             </div>
             <div
-                className={`fixed inset-y-0  mt-32 flex flex-col gap-4 space-y-5 overflow-y-auto px-5`}
+                className={`fixed inset-y-0  mt-32 flex flex-col gap-4 space-y-5 overflow-y-auto px-5 pt-3`}
                 style={{ maxHeight: 'calc(100vh - 4rem)' }}
             >
                 {filteredCards.length > 0 ? (

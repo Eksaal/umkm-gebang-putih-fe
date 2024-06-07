@@ -22,8 +22,8 @@ const HomePage: React.FunctionComponent = () => {
     }
 
     return (
-        <main className="min-h-screen space-y-12 pt-20 ">
-            <section className="relative mx-auto max-w-[1180px] pt-10">
+        <main className="min-h-screen space-y-12">
+            <section className="relative mx-auto max-w-[1180px] pt-16">
                 <Image
                     src={BannerImage}
                     alt="hero-image"
