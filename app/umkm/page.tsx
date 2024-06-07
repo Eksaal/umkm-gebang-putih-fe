@@ -2,7 +2,6 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
 
-// Define the type for the locations prop
 interface Location {
     id: string
     lat: number
@@ -32,7 +31,7 @@ const locations = latitudes.map((lat, index) => ({
 
 const Home: React.FC = () => {
     return (
-        <div className="h-screen w-full overflow-hidden">
+        <div className="flex-grow pt-16">
             <Map locations={locations} />
         </div>
     )

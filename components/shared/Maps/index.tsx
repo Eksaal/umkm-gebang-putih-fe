@@ -29,8 +29,8 @@ const Map: React.FC<MapProps> = ({ locations }) => {
     return (
         <MapContainer
             center={[-7.282862, 112.785852]}
-            zoom={23}
-            style={{ height: '100vh', width: '100%', marginTop: '64px' }}
+            zoom={20}
+            className=" absolute block h-full w-full"
         >
             <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

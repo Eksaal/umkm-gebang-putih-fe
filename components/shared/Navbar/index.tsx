@@ -14,14 +14,8 @@ export default function Navbar() {
     const handleCloseModal = () => {
         setModalOpen(false)
     }
-
-    const navlinks = [
-        { label: 'Home', href: '/' },
-        { label: 'UMKM', href: '/umkm' },
-    ]
-
     return (
-        <nav className="fixed  z-50 flex h-16 w-full items-center bg-green-100 px-16">
+        <nav className="absolute  z-50 flex h-16 w-full items-center bg-green-100 px-16">
             <h2 className="text-xl font-extrabold">
                 <span className="text-green-500">UMKM</span> GEBANG PUTIH
             </h2>
@@ -41,3 +35,8 @@ export default function Navbar() {
         </nav>
     )
 }
+
+const navlinks = [
+    { label: 'Home', href: '/' },
+    { label: 'UMKM', href: '/umkm' },
+]

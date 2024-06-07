@@ -1,17 +1,14 @@
-import React, { useState } from 'react'
+'use client'
+import React from 'react'
 import Sidebar from '@/components/shared/Sidebar'
 
-interface LayoutProps {
-    children: React.ReactNode
-}
-
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const UmkmLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return (
-        <div className="flex">
+        <div className="flex h-screen">
             <Sidebar />
-            <div className="flex-1">{children}</div>
+            <div className="flex-grow">{children}</div>
         </div>
     )
 }
 
-export default Layout
+export default UmkmLayout
