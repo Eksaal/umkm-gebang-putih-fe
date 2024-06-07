@@ -1,5 +1,7 @@
+'use client'
 import * as React from 'react'
 import Image from 'next/image'
+import '@fortawesome/fontawesome-free/css/all.min.css'
 
 interface ICardProps {
     readonly name: string
@@ -14,20 +16,26 @@ const Card: React.FunctionComponent<ICardProps> = ({
     name,
     address,
     rating,
+    type,
 }) => {
     return (
-        <div className=" mx-auto grid h-[218px] w-[500px] grid-cols-2 gap-3 overflow-hidden rounded-lg shadow-lg">
+        <div className="relative mx-auto mb-4 grid h-[218px] w-[500px] grid-cols-2 gap-3 overflow-hidden rounded-lg shadow-lg">
             <Image
                 src={image}
                 alt="hero-image"
                 height={218}
                 width={242}
-                className="h-[218px] w-[242px]"
+                className="h-[218px] w-[242px] object-cover"
             />
-            <div className=" flex flex-col justify-between px-4 py-4">
-                <h2 className="upercase text-2xl font-bold">{name}</h2>
+            <div className="flex flex-col justify-between px-4 py-4">
+                <h2 className="text-2xl font-bold uppercase">{name}</h2>
                 <h3 className="">{rating} Ulasan</h3>
-                <p>{address} </p>
+
+                <div className=""></div>
+                <p className="text-sm">{address}</p>
+            </div>
+            <div className=" text-md absolute left-5 top-5 rounded-md  bg-blue-400 px-2 py-1 text-white">
+                {type}
             </div>
         </div>
     )

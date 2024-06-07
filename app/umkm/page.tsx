@@ -24,10 +24,13 @@ const longitudes = [
     112.78733, 112.787067, 112.78708, 112.787392, 112.788039,
 ]
 
+const names = ['warung', 'warung']
+
 const locations = latitudes.map((lat, index) => ({
     id: (index + 1).toString(),
     lat,
     long: longitudes[index],
+    name: names[index],
 }))
 
 const Home: React.FC = () => {
