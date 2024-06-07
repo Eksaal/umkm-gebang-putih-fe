@@ -32,7 +32,7 @@ const locations = latitudes.map((lat, index) => ({
 
 const Home: React.FC = () => {
     return (
-        <div className="flex-grow pt-16">
+        <div className="flex-grow bg-transparent pt-16">
             <Map locations={locations} />
         </div>
     )

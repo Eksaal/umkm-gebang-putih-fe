@@ -16,7 +16,7 @@ const Card: React.FunctionComponent<ICardProps> = ({
     rating,
 }) => {
     return (
-        <div className=" mx-auto grid h-[218px] w-[500px] grid-cols-2 gap-3 overflow-hidden rounded-lg shadow-md">
+        <div className=" mx-auto grid h-[218px] w-[500px] grid-cols-2 gap-3 overflow-hidden rounded-lg shadow-lg">
             <Image
                 src={image}
                 alt="hero-image"

@@ -30,7 +30,7 @@ const Map: React.FC<MapProps> = ({ locations }) => {
         <MapContainer
             center={[-7.282862, 112.785852]}
             zoom={20}
-            className=" fixed h-full w-full"
+            className=" fixed left-0 right-0 h-full w-full"
         >
             <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
