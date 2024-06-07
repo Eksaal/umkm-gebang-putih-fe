@@ -18,10 +18,11 @@ const Card: React.FunctionComponent<ICardProps> = ({
     rating,
     type,
 }) => {
+    const cleanType = type.replace(/[\[\]"]/g, '').trim()
     return (
         <div className="relative mx-auto mb-4 grid h-[218px] w-[500px] grid-cols-2 gap-3 overflow-hidden rounded-lg shadow-lg">
             <Image
-                src={image}
+                src={`http://localhost:3333/${image}`}
                 alt="hero-image"
                 height={218}
                 width={242}
@@ -35,7 +36,7 @@ const Card: React.FunctionComponent<ICardProps> = ({
                 <p className="text-sm">{address}</p>
             </div>
             <div className=" text-md absolute left-5 top-5 rounded-md  bg-blue-400 px-2 py-1 text-white">
-                {type}
+                {cleanType}
             </div>
         </div>
     )

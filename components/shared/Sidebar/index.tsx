@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Card from '../Card'
+import { useUmkm } from '@/hooks/useUMKM'
+import { UmkmMeta } from '@/app/umkm/page'
 
 interface ISidebarProps {}
 
@@ -16,6 +18,21 @@ interface CardData {
 }
 
 const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
+    const { getMetaUmkm } = useUmkm()
+    const [locations, setLocations] = useState<UmkmMeta[]>([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data: UmkmMeta[] = await getMetaUmkm()
+                setLocations(data)
+            } catch (error) {
+                console.error('Error fetching UMKM data:', error)
+            }
+        }
+
+        fetchData()
+    }, [])
     const [searchTerm, setSearchTerm] = useState<string>('')
     const [selectedType, setSelectedType] = useState<string>('All')
 
@@ -41,58 +58,20 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
         router.replace(`?${queryString}`, undefined)
     }, [searchTerm, selectedType, router])
 
-    const cardsData: CardData[] = [
-        {
-            name: 'Nama',
-            rating: 4,
-            address:
-                'bantuan promosi agar usaha anda dapat dikenal oleh banyak orang',
-            type: 'Makanan',
-            image: '/homepage/wrung1.png',
-        },
-        {
-            name: 'Warung 2',
-            rating: 5,
-            address: 'bantuan promosi untuk usaha kuliner anda',
-            type: 'Minuman',
-            image: '/homepage/wrung1.png',
-        },
-        {
-            name: 'Warung 3',
-            rating: 3,
-            address: 'promosi bisnis anda dengan efektif',
-            type: 'Minuman',
-            image: '/homepage/wrung1.png',
-        },
-        {
-            name: 'Warung 3',
-            rating: 3,
-            address: 'promosi bisnis anda dengan efektif',
-            type: 'Minuman',
-            image: '/homepage/wrung1.png',
-        },
-        {
-            name: 'Warung 3',
-            rating: 3,
-            address: 'promosi bisnis anda dengan efektif',
-            type: 'Minuman',
-            image: '/homepage/wrung1.png',
-        },
-    ]
-
-    const filteredCards = cardsData.filter((card) => {
+    const filteredCards = locations.filter((card) => {
         const matchesName = card.name
             .toLowerCase()
             .includes(searchTerm.toLowerCase())
-        const matchesType = selectedType === 'All' || card.type === selectedType
+        const matchesType =
+            selectedType === 'All' || card.category === selectedType
         return matchesName && matchesType
     })
 
     return (
         <div
-            className={`${filteredCards.length < 1 ? '' : 'bg-white'} z-20 min-h-screen min-w-[543px] `}
+            className={`${filteredCards.length < 1 ? '' : 'bg-white'} z-20 min-h-screen min-w-[543px] pt-16 `}
         >
-            <div className="flex gap-4 px-6">
+            <div className="mb-5 flex gap-4 px-6">
                 <div className="relative my-4 w-2/3">
                     <input
                         type="text"
@@ -126,10 +105,11 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
                             <Card
                                 key={index}
                                 name={card.name}
-                                rating={card.rating}
+                                rating={5}
+                                // rating={card.rating}
                                 address={card.address}
-                                type={card.type}
-                                image={card.image}
+                                type={card.category}
+                                image={card.pictures}
                             />
                         ))}
                     </div>

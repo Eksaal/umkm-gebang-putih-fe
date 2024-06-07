@@ -1,3 +1,4 @@
+// components/shared/Maps.tsx
 'use client'
 import React from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
@@ -6,27 +7,32 @@ import { useRouter } from 'next/navigation'
 import 'leaflet/dist/leaflet.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
+export interface UmkmMeta {
+    id: number
+    name: string
+    category: string
+    address: string
+    latitude: number
+    longitude: number
+    pictures: string
+}
+
 interface MapProps {
-    locations: {
-        id: string
-        lat: number
-        long: number
-        name: string
-    }[]
+    locations: UmkmMeta[]
 }
 
 const createCustomIcon = () => {
-    const divIcon = L.divIcon({
+    return L.divIcon({
         html: `<div style="color: red; font-size: 24px;"><i class="fas fa-map-marker-alt"></i></div>`,
         className: '',
     })
-    return divIcon
 }
 
 const Map: React.FC<MapProps> = ({ locations }) => {
     const router = useRouter()
 
     const handleMarkerClick = (name: string) => {
+        console.log('NAME', name)
         const searchUrl = `/umkm?search=${encodeURIComponent(name)}`
         router.push(searchUrl)
     }
@@ -45,12 +51,12 @@ const Map: React.FC<MapProps> = ({ locations }) => {
                 <Marker
                     key={location.id}
                     icon={createCustomIcon()}
-                    position={[location.lat, location.long]}
+                    position={[location.latitude, location.longitude]}
                     eventHandlers={{
                         click: () => handleMarkerClick(location.name),
                     }}
                 >
-                    {location.name}
+                    <Popup>{location.name}</Popup>
                 </Marker>
             ))}
         </MapContainer>

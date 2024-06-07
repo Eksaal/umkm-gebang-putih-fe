@@ -22,7 +22,7 @@ export default function Navbar() {
     }
 
     return (
-        <nav className="z-50 flex h-16 w-full items-center bg-green-100 px-16">
+        <nav className="fixed z-50 flex h-16 w-full items-center bg-green-100 px-16">
             <h2 className="text-xl font-extrabold">
                 <span className="text-green-500">UMKM</span> GEBANG PUTIH
             </h2>
