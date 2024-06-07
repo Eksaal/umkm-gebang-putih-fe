@@ -12,6 +12,8 @@ export interface UmkmMeta {
     latitude: number
     longitude: number
     pictures: string
+    totalReviews: number,
+    averageRating: number
 }
 
 const Map = dynamic(() => import('@/components/shared/Maps'), {

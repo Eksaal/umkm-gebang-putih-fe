@@ -10,14 +10,6 @@ import DetilModal from '../DetailModal'
 
 interface ISidebarProps {}
 
-interface CardData {
-    name: string
-    rating: number
-    address: string
-    type: string
-    image: string
-}
-
 const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
     const { getMetaUmkm } = useUmkm()
     const [isOpen, setIsOpen] = useState(false)
@@ -126,8 +118,8 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
                                 key={index}
                                 id={card.id}
                                 name={card.name}
-                                rating={5}
-                                // rating={card.rating}
+                                rating={card.averageRating}
+                                totalUlasan={card.averageRating}
                                 address={card.address}
                                 type={card.category}
                                 image={card.pictures}

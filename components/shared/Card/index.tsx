@@ -2,7 +2,7 @@
 import * as React from 'react'
 import Image from 'next/image'
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import { on } from 'events'
+import Rating from '../Rating'
 
 interface ICardProps {
     readonly id: number
@@ -11,6 +11,7 @@ interface ICardProps {
     readonly address: string
     readonly image: string
     readonly type: string
+    readonly totalUlasan: number
     onClick: (id: number) => void
 }
 
@@ -20,6 +21,7 @@ const Card: React.FunctionComponent<ICardProps> = ({
     name,
     address,
     rating,
+    totalUlasan,
     type,
     onClick,
 }) => {
@@ -37,7 +39,13 @@ const Card: React.FunctionComponent<ICardProps> = ({
             />
             <div className="flex flex-col justify-between px-4 py-4">
                 <h2 className="text-xl font-bold uppercase">{name}</h2>
-                <h3 className="">{rating}Ulasan</h3>
+                <div className="">
+                    <div className="flex items-center gap-2">
+                        <h3>{rating}</h3>
+                        <Rating initialValue={rating} disabled />
+                    </div>
+                    <h3>( {totalUlasan} Ulasan )</h3>
+                </div>
                 <p className="text-sm">{address}</p>
             </div>
             <div className="text-md absolute left-5 top-5 rounded-md bg-blue-400 px-2 py-1 text-white">
