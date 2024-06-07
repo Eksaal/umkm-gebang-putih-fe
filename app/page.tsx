@@ -1,34 +1,20 @@
 import React from 'react'
 import Footer from '@/components/shared/Footer'
 import Image from 'next/image'
-import image from '@/public/homepage/hero.png'
-import Card from '@/components/shared/Card'
 import Link from 'next/link'
-import { BiSolidLike, BiLocationPlus, BiBowlHot } from 'react-icons/bi' // Import the FaHome icon from react-icons
+import BannerImage from '@/public/homepage/hero.png'
+import { BiSolidLike, BiLocationPlus, BiBowlHot } from 'react-icons/bi'
 
-const layanan = [
-    {
-        name: 'Produk',
-        desc: 'Temukani makanan dan minuman yang anda butuhkan',
-        icon: <BiBowlHot />,
-    },
-    {
-        name: 'Lokasi',
-        desc: 'Tersedia lokasi UMKM sehingga anda bisa mendatangi penjual secara langsung',
-        icon: <BiLocationPlus />,
-    },
-    {
-        name: 'Ulasan',
-        desc: 'Anda dapat melihat dan memberi ulasan pada toko',
-        icon: <BiSolidLike />,
-    },
-]
-
-export default function App() {
+const HomePage: React.FunctionComponent = () => {
     return (
         <main className="min-h-screen space-y-12 pt-20 ">
             <section className="relative mx-auto max-w-[1180px] pt-10">
-                <Image src={image} alt="hero-image" height={240} width={1180} />
+                <Image
+                    src={BannerImage}
+                    alt="hero-image"
+                    height={240}
+                    width={1180}
+                />
                 <div className="absolute left-10 top-28 text-white">
                     <h2 className="text-5xl font-extrabold">
                         <span className="text-neutral-700">UMKM</span> GEBANG
@@ -98,8 +84,27 @@ export default function App() {
                     </div>
                 </div>
             </section>
-
             <Footer />
         </main>
     )
 }
+
+export default HomePage
+
+const layanan = [
+    {
+        name: 'Produk',
+        desc: 'Temukani makanan dan minuman yang anda butuhkan',
+        icon: <BiBowlHot />,
+    },
+    {
+        name: 'Lokasi',
+        desc: 'Tersedia lokasi UMKM sehingga anda bisa mendatangi penjual secara langsung',
+        icon: <BiLocationPlus />,
+    },
+    {
+        name: 'Ulasan',
+        desc: 'Anda dapat melihat dan memberi ulasan pada toko',
+        icon: <BiSolidLike />,
+    },
+]

@@ -32,7 +32,7 @@ const locations = latitudes.map((lat, index) => ({
 
 const Home: React.FC = () => {
     return (
-        <div className="w-full">
+        <div className="h-screen w-full overflow-hidden">
             <Map locations={locations} />
         </div>
     )
