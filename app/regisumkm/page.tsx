@@ -5,6 +5,52 @@ import { Input } from '@/components/ui/input'
 import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useUmkmForm } from '@/hooks/useUMKMForm'
+import { useState } from 'react'
+
+interface DropdownCheckbox {
+    label: string
+    options: any
+    register: any
+    name: string
+}
+const DropdownCheckbox = ({
+    label,
+    options,
+    register,
+    name,
+}: DropdownCheckbox) => {
+    const [open, setOpen] = useState(false)
+
+    return (
+        <div className="relative">
+            <button
+                type="button"
+                className="w-full rounded border border-gray-300 p-2"
+                onClick={() => setOpen(!open)}
+            >
+                {label}
+            </button>
+            {open && (
+                <div className="absolute z-10 w-full rounded border border-gray-300 bg-white shadow-lg">
+                    {options.map((option: any) => (
+                        <label
+                            key={option.value}
+                            className="block cursor-pointer p-2"
+                        >
+                            <input
+                                type="checkbox"
+                                value={option.value}
+                                {...register(name)}
+                                className="mr-2"
+                            />
+                            {option.label}
+                        </label>
+                    ))}
+                </div>
+            )}
+        </div>
+    )
+}
 
 export default function UmkmDataForm() {
     const { storeData } = useUmkmForm()
@@ -23,12 +69,20 @@ export default function UmkmDataForm() {
             business_address: '',
             business_contact: '',
             contact_name: '',
-            opening_days: '',
+            opening_days: [],
             special_closing_days: '',
-            opening_hours: '',
-            services: '',
-            payment_methods: '',
-            facilities: '',
+            opening_hours: {
+                senin: {},
+                selasa: {},
+                rabu: {},
+                kamis: {},
+                jumat: {},
+                sabtu: {},
+                minggu: {},
+            },
+            services: [],
+            payment_methods: [],
+            facilities: [],
             latitude: 0,
             longitude: 0,
             food_price: '',
@@ -46,142 +100,238 @@ export default function UmkmDataForm() {
     }
 
     return (
-        <div className="mx-auto w-full max-w-[900px] space-y-8 rounded bg-white p-10">
+        <div className="mx-auto w-full max-w-[900px] space-y-8 rounded bg-white py-28">
             <h1 className="text-center text-[22px] font-semibold leading-7">
-                Add Business Data
+                Registrasi Data Usaha
             </h1>
 
             <form className="space-y-4" onSubmit={handleSubmit(handleForm)}>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div className="space-y-4">
+                    <div className="flex flex-col">
+                        <label className="form-label mb-2 font-medium">
+                            Nama Usaha
+                        </label>
+                        <Input
+                            {...register('name', {
+                                required: 'Nama Usaha is required',
+                            })}
+                            required
+                            type="text"
+                            placeholder="Nama Usaha..."
+                            className="rounded border border-gray-300 p-2"
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label className="form-label mb-2 font-medium">
+                            Kategori Bisnis
+                        </label>
+                        <DropdownCheckbox
+                            label="Kategori Bisnis"
+                            name="category"
+                            register={register}
+                            options={[
+                                { value: 'Makanan', label: 'Makanan' },
+                                { value: 'Minuman', label: 'Minuman' },
+                                {
+                                    value: 'Makanan dan Minuman',
+                                    label: 'Makanan dan Minuman',
+                                },
+                            ]}
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label className="form-label mb-2 font-medium">
+                            Alamat
+                        </label>
+                        <Input
+                            {...register('business_address', {
+                                required: 'Alamat is required',
+                            })}
+                            required
+                            type="text"
+                            placeholder="Alamat..."
+                            className="rounded border border-gray-300 p-2"
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label className="form-label mb-2 font-medium">
+                            No. Telpon
+                        </label>
+                        <Input
+                            {...register('business_contact', {
+                                required: 'No. Telpon is required',
+                            })}
+                            required
+                            type="text"
+                            placeholder="No. Telpon..."
+                            className="rounded border border-gray-300 p-2"
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label className="form-label mb-2 font-medium">
+                            Nama Kontak
+                        </label>
+                        <Input
+                            {...register('contact_name', {
+                                required: 'Nama Kontak is required',
+                            })}
+                            required
+                            type="text"
+                            placeholder="Nama Kontak..."
+                            className="rounded border border-gray-300 p-2"
+                        />
+                    </div>
+                </div>
+
+                <div className="space-y-4">
+                    <label className="form-label mb-2 font-medium">
+                        Hari dan Jam Buka
+                    </label>
                     {[
-                        {
-                            name: 'name',
-                            label: 'Nama usaha',
-                            type: 'text',
-                            placeholder: 'Toko bu sri...',
-                        },
-                        {
-                            name: 'category',
-                            label: 'Katagori',
-                            type: 'text',
-                            placeholder: 'Makanan...',
-                        },
-                        {
-                            name: 'product_type',
-                            label: 'Tipe Produk',
-                            type: 'text',
-                            placeholder: 'Ayam geprek..',
-                        },
-                        {
-                            name: 'business_type',
-                            label: 'Jenis Usaha',
-                            type: 'text',
-                            placeholder: 'Pedagang Kaki Lima..',
-                        },
-                        {
-                            name: 'business_address',
-                            label: 'Alamat Usaha',
-                            type: 'text',
-                            placeholder: 'Jalan gebang putih no.1...',
-                        },
-                        {
-                            name: 'business_contact',
-                            label: 'Kontak Usaha',
-                            type: 'text',
-                            placeholder: '081361xxxxxxx..',
-                        },
-                        {
-                            name: 'contact_name',
-                            label: 'Nama Kontak',
-                            type: 'text',
-                            placeholder: 'Bu Sri...',
-                        },
-                        {
-                            name: 'opening_days',
-                            label: 'Hari Buka',
-                            type: 'text',
-                            placeholder: 'Setiap Hari...',
-                        },
-                        {
-                            name: 'special_closing_days',
-                            label: 'Hari tutup khusus',
-                            type: 'text',
-                            placeholder: 'Tanggal merah...',
-                        },
-                        {
-                            name: 'opening_hours',
-                            label: 'Jam Buka',
-                            type: 'text',
-                            placeholder: '10:00-17:00..',
-                        },
-                        {
-                            name: 'services',
-                            label: 'Layanan',
-                            type: 'text',
-                            placeholder: 'Terima pesanan...',
-                        },
-                        {
-                            name: 'payment_methods',
-                            label: 'Metode pembayaran',
-                            type: 'text',
-                            placeholder: 'Tunai...',
-                        },
-                        {
-                            name: 'facilities',
-                            label: 'Fasilitas',
-                            type: 'text',
-                            placeholder: 'Parkir...',
-                        },
-                        {
-                            name: 'latitude',
-                            label: 'Latitude',
-                            type: 'number',
-                            step: '0.000001',
-                            placeholder: 'Latitude...',
-                        },
-                        {
-                            name: 'longitude',
-                            label: 'Longitude',
-                            type: 'number',
-                            step: '0.000001',
-                            placeholder: 'Longitude...',
-                        },
-                        {
-                            name: 'food_price',
-                            label: 'Harga Makanan',
-                            type: 'text',
-                            placeholder: '1000-200000..',
-                        },
-                        {
-                            name: 'drink_price',
-                            label: 'Harga Minuman',
-                            type: 'text',
-                            placeholder: '1000-5000...',
-                        },
-                    ].map((field) => (
-                        <div key={field.name} className="flex flex-col">
-                            <label className="form-label mb-2 font-medium">
-                                {field.label}
-                            </label>
+                        'senin',
+                        'selasa',
+                        'rabu',
+                        'kamis',
+                        'jumat',
+                        'sabtu',
+                        'minggu',
+                    ].map((day) => (
+                        <div key={day} className="flex items-center space-x-4">
+                            <input
+                                type="checkbox"
+                                {...register(`opening_hours.${day}.open`)}
+                                className="h-4 w-4"
+                            />
+                            <span className="capitalize">{day}</span>
                             <Input
-                                {...register(field.name, {
-                                    required: `${field.label} is required`,
-                                })}
-                                required
-                                type={field.type}
-                                step={field.step}
-                                placeholder={field.placeholder}
-                                className="rounded border border-gray-300 p-2"
+                                {...register(`opening_hours.${day}.open_time`)}
+                                type="text"
+                                placeholder="Jam Buka"
+                                className="flex-1 rounded border border-gray-300 p-2"
+                            />
+                            <Input
+                                {...register(`opening_hours.${day}.close_time`)}
+                                type="text"
+                                placeholder="Jam Tutup"
+                                className="flex-1 rounded border border-gray-300 p-2"
                             />
                         </div>
                     ))}
+                </div>
+
+                <div className="space-y-4">
+                    <div className="flex flex-col">
+                        <label className="form-label mb-2 font-medium">
+                            Layanan
+                        </label>
+                        <DropdownCheckbox
+                            label="Layanan"
+                            name="services"
+                            register={register}
+                            options={[
+                                {
+                                    value: 'Makan di Tempat',
+                                    label: 'Makan di Tempat',
+                                },
+                                {
+                                    value: 'Terima Pesanan',
+                                    label: 'Terima Pesanan',
+                                },
+                            ]}
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label className="form-label mb-2 font-medium">
+                            Fasilitas
+                        </label>
+                        <DropdownCheckbox
+                            label="Fasilitas"
+                            name="facilities"
+                            register={register}
+                            options={[
+                                { value: 'Parkir', label: 'Parkir' },
+                                { value: 'Toilet', label: 'Toilet' },
+                            ]}
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label className="form-label mb-2 font-medium">
+                            Pembayaran
+                        </label>
+                        <DropdownCheckbox
+                            label="Pembayaran"
+                            name="payment_methods"
+                            register={register}
+                            options={[
+                                { value: 'Tunai', label: 'Tunai' },
+                                {
+                                    value: 'Non-Tunai',
+                                    label: 'Non-Tunai (Transfer, QRIS)',
+                                },
+                            ]}
+                        />
+                    </div>
+                </div>
+
+                <div className="space-y-4">
+                    <label className="form-label mb-2 font-medium">
+                        Lokasi Titik
+                    </label>
+                    <div className="flex space-x-4">
+                        <Input
+                            {...register('latitude', {
+                                required: 'Latitude is required',
+                            })}
+                            required
+                            type="number"
+                            step="0.000001"
+                            placeholder="Latitude"
+                            className="flex-1 rounded border border-gray-300 p-2"
+                        />
+                        <Input
+                            {...register('longitude', {
+                                required: 'Longitude is required',
+                            })}
+                            required
+                            type="number"
+                            step="0.000001"
+                            placeholder="Longitude"
+                            className="flex-1 rounded border border-gray-300 p-2"
+                        />
+                    </div>
+                </div>
+
+                <div className="space-y-4">
+                    <div className="flex flex-col">
+                        <label className="form-label mb-2 font-medium">
+                            Rentang Harga
+                        </label>
+                        <Input
+                            {...register('food_price', {
+                                required: 'Harga Makanan is required',
+                            })}
+                            required
+                            type="text"
+                            placeholder="Harga Terendah..."
+                            className="rounded border border-gray-300 p-2"
+                        />
+                        <Input
+                            {...register('drink_price', {
+                                required: 'Harga Minuman is required',
+                            })}
+                            required
+                            type="text"
+                            placeholder="Harga Tertinggi..."
+                            className="mt-2 rounded border border-gray-300 p-2"
+                        />
+                    </div>
                 </div>
 
                 <div className="text-center">
                     <Button
                         disabled={isSubmitting}
                         type="submit"
-                        className="w-full"
+                        className="w-full bg-green-500 hover:bg-green-400"
                     >
                         Submit
                     </Button>
