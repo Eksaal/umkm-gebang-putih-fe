@@ -20,6 +20,15 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
 
     const cleanType = (type: string) => type.replace(/[\[\]"]/g, '').trim()
 
+    const parseAndCleanArray = (arrayString: string) => {
+        try {
+            return JSON.parse(arrayString).map((item: string) => item.trim())
+        } catch (error) {
+            console.error('Error parsing array string:', error)
+            return []
+        }
+    }
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -27,9 +36,11 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                 const cleanedData = {
                     ...response.data,
                     category: cleanType(response.data.category),
-                    services: cleanType(response.data.services),
-                    payment_methods: cleanType(response.data.payment_methods),
-                    facilities: cleanType(response.data.facilities),
+                    services: parseAndCleanArray(response.data.services),
+                    payment_methods: parseAndCleanArray(
+                        response.data.payment_methods,
+                    ),
+                    facilities: parseAndCleanArray(response.data.facilities),
                 }
                 setData(cleanedData)
             } catch (error) {
@@ -45,7 +56,7 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
     }, [id])
 
     if (loading) {
-        return <div>Loading...</div>
+        return <div></div>
     }
 
     if (!data) {
@@ -71,7 +82,7 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
             <FaX
                 size={30}
                 onClick={onClose}
-                className="absolute right-4 top-4 cursor-pointer  rounded-full p-1 text-xl text-white hover:text-blue-300"
+                className="absolute right-4 top-4 cursor-pointer rounded-full p-1 text-xl text-white hover:text-blue-300"
             />
 
             <div className="mx-auto px-10 py-2">
@@ -79,12 +90,15 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                 <p className="text-sm">{data.business_address}</p>
                 <div className="flex flex-row items-center gap-2 text-lg">
                     <h4>4.6</h4>
-                    <Rating initialValue={4.6} />
+                    <Rating initialValue={4.6} disabled />
                     <h4>(12)</h4>
                 </div>
             </div>
             <div className="mx-auto -mt-5 px-5">
-                <Tabs.Root defaultValue="about" className="px-5 pt-3">
+                <Tabs.Root
+                    defaultValue="about"
+                    className="h-[calc(89vh-200px)] px-5 pt-3"
+                >
                     <Tabs.List className="flex border-b border-gray-200">
                         <Tabs.Trigger
                             value="about"
@@ -96,7 +110,7 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                             value="documents"
                             className="flex-1 py-2 text-center text-gray-500 hover:text-blue-500 focus:outline-none data-[state=active]:border-b-2 data-[state=active]:border-green-500 data-[state=active]:text-green-500"
                         >
-                            Reveiw
+                            Ulasan
                         </Tabs.Trigger>
                         <Tabs.Trigger
                             value="gallery"
@@ -106,36 +120,63 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                         </Tabs.Trigger>
                     </Tabs.List>
 
-                    <Tabs.Content value="about" className="space-y-1 pt-2">
+                    <Tabs.Content
+                        value="about"
+                        className="h-[calc(50vh-40px)] space-y-1 overflow-y-auto pt-2"
+                    >
                         <h3 className="text-lg">Informasi Umum</h3>
                         <div className="flex items-center gap-x-4">
                             <FaPhoneVolume className="text-green-500" />{' '}
                             {data.business_contact}
                         </div>
                         <OpeningHours days={hoursData} />
-                        <div className="flex items-center gap-x-4">
+                        <div className="mb-2 flex items-center gap-x-4">
                             <FaMoneyBill className="text-green-500" /> Rp.{' '}
                             {data.min_price} - Rp. {data.max_price}
                         </div>
-                        <hr />
-                        <h3 className="text-lg">Layanan</h3>
-                        <div className="flex items-center gap-x-4">
-                            <FaCheck className="text-green-500" />{' '}
-                            {data.services}
+                        <hr className="pt-2" />
+                        <h3 className=" pt-2 text-lg">Layanan</h3>
+                        <div className="grid grid-cols-2">
+                            {data.services.map(
+                                (service: string, index: number) => (
+                                    <div
+                                        key={index}
+                                        className="flex items-center gap-x-4"
+                                    >
+                                        <FaCheck className="text-green-500" />{' '}
+                                        {service}
+                                    </div>
+                                ),
+                            )}
                         </div>
-                        <hr />
-                        <h3 className="text-lg">Pembayaran</h3>
-                        <div className="flex items-center gap-x-4">
-                            <FaCheck className="text-green-500" />{' '}
-                            {data.payment_methods}
+                        <hr className="py-2" />
+                        <h3 className="pt-2 text-lg">Pembayaran</h3>
+                        <div className="grid grid-cols-2">
+                            {data.payment_methods.map(
+                                (payment: string, index: number) => (
+                                    <div
+                                        key={index}
+                                        className="col-span-1 flex items-center gap-x-4"
+                                    >
+                                        <FaCheck className="text-green-500" />{' '}
+                                        {payment}
+                                    </div>
+                                ),
+                            )}
                         </div>
                     </Tabs.Content>
 
-                    <Tabs.Content value="documents" className="p-4">
+                    <Tabs.Content
+                        value="documents"
+                        className="h-[calc(50vh-40px)] space-y-1 overflow-y-auto pt-2"
+                    >
                         <h2>JSANODA</h2>
                     </Tabs.Content>
 
-                    <Tabs.Content value="gallery" className="pt-2">
+                    <Tabs.Content
+                        value="gallery"
+                        className="h-[calc(50vh-40px)] space-y-1 overflow-y-auto pt-2"
+                    >
                         <h3 className="pb-3 pt-5 text-lg">Foto</h3>
                         <div className="mx-auto">
                             {data.pictures.length > 0 && (

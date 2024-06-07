@@ -54,6 +54,7 @@ export default function ImageUploadForm() {
                 menu_image: menuImageBase64,
             }
             await storePicture(formData)
+            router.push('/regisumkm')
             router.refresh()
         } catch (error) {
             console.error(error)
