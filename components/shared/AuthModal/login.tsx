@@ -6,6 +6,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { ILogin } from '@/types/auth'
 import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useAuthModalStore } from '@/store/useAuthModalStore'
 
 interface LoginProps {
     setAuthState: (state: 'login' | 'forgot-password' | 'register') => void
@@ -13,6 +14,7 @@ interface LoginProps {
 
 export default function Login({ setAuthState }: LoginProps) {
     const router = useRouter()
+    const { closeModal } = useAuthModalStore()
     const { login } = useAuth()
 
     const {
@@ -29,6 +31,7 @@ export default function Login({ setAuthState }: LoginProps) {
     const handleForm: SubmitHandler<ILogin> = async (data) => {
         try {
             await login(data)
+            closeModal()
             router.refresh()
         } catch {}
     }

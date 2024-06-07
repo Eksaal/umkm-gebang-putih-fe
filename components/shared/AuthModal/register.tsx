@@ -4,9 +4,9 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useAuth } from '@/hooks/useAuth'
 import { IRegister } from '@/types/auth'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useAuthModalStore } from '@/store/useAuthModalStore'
 
 interface RegisterProps {
     setAuthState: (state: 'login' | 'forgot-password' | 'register') => void
@@ -15,7 +15,7 @@ interface RegisterProps {
 export default function Register({ setAuthState }: RegisterProps) {
     const router = useRouter()
     const { register: signup } = useAuth()
-
+    const { closeModal } = useAuthModalStore()
     const {
         register,
         handleSubmit,
@@ -31,6 +31,7 @@ export default function Register({ setAuthState }: RegisterProps) {
     const handleForm: SubmitHandler<IRegister> = async (data) => {
         try {
             await signup(data)
+            closeModal()
             router.refresh()
         } catch {}
     }

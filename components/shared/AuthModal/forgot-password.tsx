@@ -4,15 +4,16 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useAuth } from '@/hooks/useAuth'
 import { IForgotPassword } from '@/types/auth'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useAuthModalStore } from '@/store/useAuthModalStore'
 
 interface ForgotPasswordProps {
     setAuthState: (state: 'login' | 'forgot-password' | 'register') => void
 }
 
 export default function ForgotPassword({ setAuthState }: ForgotPasswordProps) {
+    const { closeModal } = useAuthModalStore()
     const router = useRouter()
     const { forgotPassword } = useAuth()
 
@@ -29,6 +30,7 @@ export default function ForgotPassword({ setAuthState }: ForgotPasswordProps) {
     const handleForm: SubmitHandler<IForgotPassword> = async (data) => {
         try {
             await forgotPassword(data)
+            closeModal()
         } catch {}
     }
 

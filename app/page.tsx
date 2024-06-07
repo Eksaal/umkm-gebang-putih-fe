@@ -1,11 +1,26 @@
+'use client'
 import React from 'react'
 import Footer from '@/components/shared/Footer'
 import Image from 'next/image'
-import Link from 'next/link'
 import BannerImage from '@/public/homepage/hero.png'
 import { BiSolidLike, BiLocationPlus, BiBowlHot } from 'react-icons/bi'
+import { useAuthModalStore } from '@/store/useAuthModalStore'
+import { useAuth } from '@/hooks/useAuth'
+import { useRouter } from 'next/navigation'
 
 const HomePage: React.FunctionComponent = () => {
+    const { openModal } = useAuthModalStore()
+    const { loggedIn } = useAuth()
+    const router = useRouter()
+
+    const handleDaftarUmkm = () => {
+        if (loggedIn) {
+            router.push('/regisumkm')
+        } else {
+            openModal('login')
+        }
+    }
+
     return (
         <main className="min-h-screen space-y-12 pt-20 ">
             <section className="relative mx-auto max-w-[1180px] pt-10">
@@ -66,7 +81,7 @@ const HomePage: React.FunctionComponent = () => {
                 <div className="ove mt-10 flex h-80 items-center justify-center bg-umkm-fruit  bg-cover px-60">
                     <div className="w-1/3">
                         <button
-                            // href="regisumkm"
+                            onClick={handleDaftarUmkm}
                             className="cursor-pointer rounded-full bg-green-100 px-10 py-3 text-xl font-semibold hover:bg-green-300"
                         >
                             DAFTARKAN UMKM

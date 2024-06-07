@@ -4,12 +4,21 @@ import AuthModal from '@/components/shared/AuthModal'
 import { Button } from '@/components/ui/button'
 import NavLinks from '@/components/shared/links/Navlinks'
 import { useAuthModalStore } from '@/store/useAuthModalStore'
+import { useAuth } from '@/hooks/useAuth'
+import { useRouter } from 'next/navigation'
 
 export default function Navbar() {
-    const { openModal, closeModal, isOpen } = useAuthModalStore()
+    const { logout, loggedIn } = useAuth()
+    const { openModal } = useAuthModalStore()
+    const router = useRouter()
 
     const handleOpenModal = () => {
         openModal('login')
+    }
+
+    const handleLogout = () => {
+        logout()
+        router.refresh()
     }
 
     return (
@@ -21,13 +30,23 @@ export default function Navbar() {
                 {navlinks.map((link, index) => (
                     <NavLinks key={index} href={link.href} label={link.label} />
                 ))}
-                <Button
-                    size="sm"
-                    onClick={handleOpenModal}
-                    className="rounded-full bg-green-500 px-5 font-semibold text-white hover:bg-green-400"
-                >
-                    Login
-                </Button>
+                {loggedIn ? (
+                    <Button
+                        size="sm"
+                        onClick={handleLogout}
+                        className="rounded-full bg-green-500 px-5 font-semibold text-white hover:bg-green-400"
+                    >
+                        Logout
+                    </Button>
+                ) : (
+                    <Button
+                        size="sm"
+                        onClick={handleOpenModal}
+                        className="rounded-full bg-green-500 px-5 font-semibold text-white hover:bg-green-400"
+                    >
+                        Login
+                    </Button>
+                )}
             </div>
             <AuthModal />
         </nav>
