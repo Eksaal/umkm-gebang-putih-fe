@@ -6,10 +6,13 @@ import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useUmkmForm } from '@/hooks/useUMKMForm'
 import { useState } from 'react'
+import { useParams } from 'next/navigation' // Import useParams
 
 export default function ImageUploadForm() {
     const router = useRouter()
+    const { id } = useParams() // Get the dynamic id from the URL
     const [imageBase64, setImageBase64] = useState<string | null>(null)
+    const [menuImageBase64, setMenuImageBase64] = useState<string | null>(null)
 
     const {
         register,
@@ -18,29 +21,37 @@ export default function ImageUploadForm() {
     } = useForm<any>({
         defaultValues: {
             image: null,
+            menu_image: null,
         },
     })
     const { storePicture } = useUmkmForm()
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageChange = (
+        e: React.ChangeEvent<HTMLInputElement>,
+        setImage: (value: string | null) => void,
+    ) => {
         const file = e.target.files?.[0]
         if (file) {
             const reader = new FileReader()
             reader.onloadend = () => {
-                setImageBase64(reader.result as string)
+                setImage(reader.result as string)
             }
             reader.readAsDataURL(file)
         }
     }
 
     const handleForm: SubmitHandler<any> = async (data) => {
-        if (!imageBase64) {
-            console.error('Image is required')
+        if (!imageBase64 || !menuImageBase64) {
+            console.error('Both images are required')
             return
         }
 
         try {
-            const formData = { picture: imageBase64 }
+            const formData = {
+                id,
+                picture: imageBase64,
+                menu_image: menuImageBase64,
+            }
             await storePicture(formData)
             router.refresh()
         } catch (error) {
@@ -49,9 +60,9 @@ export default function ImageUploadForm() {
     }
 
     return (
-        <div className="mx-auto w-full max-w-[900px] space-y-8 rounded bg-white p-10">
+        <div className="mx-auto w-full max-w-[900px] space-y-8 rounded bg-white py-28">
             <h1 className="text-center text-[22px] font-semibold leading-7">
-                Upload Image
+                Upload Images
             </h1>
 
             <form className="space-y-4" onSubmit={handleSubmit(handleForm)}>
@@ -63,7 +74,24 @@ export default function ImageUploadForm() {
                         })}
                         type="file"
                         accept="image/*"
-                        onChange={handleImageChange}
+                        onChange={(e) => handleImageChange(e, setImageBase64)}
+                        className="rounded border border-gray-300 p-2"
+                    />
+                </div>
+
+                <div className="flex flex-col">
+                    <label className="form-label mb-2 font-medium">
+                        Menu Image
+                    </label>
+                    <Input
+                        {...register('menu_image', {
+                            required: 'Menu Image is required',
+                        })}
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) =>
+                            handleImageChange(e, setMenuImageBase64)
+                        }
                         className="rounded border border-gray-300 p-2"
                     />
                 </div>
