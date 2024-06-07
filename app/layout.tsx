@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { Poppins } from 'next/font/google' // Import Poppins instead of Inter
+import { Poppins } from 'next/font/google'
+import 'leaflet/dist/leaflet.css'
 import '@/app/globals.css'
 import { cn } from '@/lib/utils'
 import { Toaster } from '@/components/ui/toaster'
@@ -7,8 +8,6 @@ import StoreInitializer from '@/store/StoreInitializer'
 import { useAuth } from '@/hooks/useAuth'
 import { unstable_noStore as noStore } from 'next/cache'
 import Navbar from '@/components/shared/Navbar'
-
-import 'leaflet/dist/leaflet.css'
 
 const poppins = Poppins({
     subsets: ['latin'],
