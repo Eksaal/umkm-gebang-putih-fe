@@ -100,7 +100,7 @@ export default function ImageUploadForm() {
                     <Button
                         disabled={isSubmitting}
                         type="submit"
-                        className="w-full"
+                        className="w-full bg-green-500 hover:bg-green-400"
                     >
                         Submit
                     </Button>
