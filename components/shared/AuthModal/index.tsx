@@ -12,7 +12,7 @@ interface AuthModalProps {
 
 type AuthState = 'login' | 'forgot-password' | 'register'
 
-export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
+const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     const [authState, setAuthState] = useState<AuthState>('login') // default state
 
     const renderComponent = () => {
@@ -33,8 +33,8 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
     }
 
     return (
-        <div className="fixed inset-0 z-20 flex items-center justify-center  bg-zinc-300 bg-opacity-50">
-            <div className="w-full max-w-md rounded-lg bg-white shadow-lg">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="relative w-full max-w-md rounded-lg bg-white p-4 shadow-lg">
                 <div className="flex justify-end p-2">
                     <GoX
                         onClick={onClose}
@@ -47,3 +47,5 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
         </div>
     )
 }
+
+export default AuthModal

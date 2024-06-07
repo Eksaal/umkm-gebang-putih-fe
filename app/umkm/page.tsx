@@ -1,5 +1,6 @@
+// pages/home.tsx
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import dynamic from 'next/dynamic'
 
 interface Location {
