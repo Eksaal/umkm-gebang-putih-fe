@@ -119,7 +119,7 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
                                 id={card.id}
                                 name={card.name}
                                 rating={card.averageRating}
-                                totalUlasan={card.averageRating}
+                                totalUlasan={card.totalReviews}
                                 address={card.address}
                                 type={card.category}
                                 image={card.pictures}

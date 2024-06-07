@@ -20,8 +20,18 @@ export const useUmkm = () => {
         }
     };
 
+    const postReview = async (data : any) => {
+        try {
+            const response = await axios.post('/reviewers', data);
+            return response.data;
+        } catch (error) {
+            console.error('Failed to store data', error);
+            return null;
+        }
+    };
     return {
         getMetaUmkm,
         getUmkm,
+        postReview,
     };
 };

@@ -4,8 +4,18 @@ import { useEffect, useState } from 'react'
 import { useUmkm } from '@/hooks/useUMKM'
 import Rating from '../Rating'
 import * as Tabs from '@radix-ui/react-tabs'
-import { FaPhoneVolume, FaMoneyBill, FaCheck, FaX } from 'react-icons/fa6'
+import { useAuthModalStore } from '@/store/useAuthModalStore'
+import {
+    FaPhoneVolume,
+    FaMoneyBill,
+    FaCheck,
+    FaX,
+    FaThumbsUp,
+} from 'react-icons/fa6'
 import OpeningHours from '../OpeningHours'
+import RatingModalForm from '../RatingModalForm'
+import { Button } from '@/components/ui/button'
+import { useAuth } from '@/hooks/useAuth'
 
 interface IDetilModalProps {
     readonly id: number
@@ -14,9 +24,24 @@ interface IDetilModalProps {
 }
 
 const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
+    const { loggedIn } = useAuth()
+    const { openModal } = useAuthModalStore()
     const { getUmkm } = useUmkm()
     const [data, setData] = useState<any | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
+    const openModalForm = () => {
+        if (loggedIn) {
+            setIsModalOpen(true)
+        } else {
+            openModal('login')
+        }
+    }
+
+    const closeModal = () => {
+        setIsModalOpen(false)
+    }
 
     const cleanType = (type: string) => type.replace(/[\[\]"]/g, '').trim()
 
@@ -170,7 +195,102 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                         value="documents"
                         className="h-[calc(50vh-40px)] space-y-1 overflow-y-auto pt-2"
                     >
-                        <h2>JSANODA</h2>
+                        <section className="">
+                            <div className="mx-auto mt-4 w-3/4">
+                                <h2 className="text-xl font-semibold">
+                                    Ringkasan Ulasan
+                                </h2>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="">
+                                        <div className="mt-4 grid grid-cols-6 items-center gap-2">
+                                            <h4 className="w-fit">1</h4>
+                                            <div className="col-span-4">
+                                                <Rating
+                                                    initialValue={1}
+                                                    disabled
+                                                />
+                                            </div>
+                                            <h4 className="col-span-1 mr-2 w-[60px]">
+                                                ( 1 )
+                                            </h4>
+                                        </div>
+                                        <div className="mt-2 grid grid-cols-6 items-center gap-2">
+                                            <h4 className="w-fit">2</h4>
+                                            <div className="col-span-4">
+                                                <Rating
+                                                    initialValue={2}
+                                                    disabled
+                                                />
+                                            </div>
+                                            <h4 className="col-span-1 mr-2 w-[60px]">
+                                                ( 1 )
+                                            </h4>
+                                        </div>
+                                        <div className="mt-2 grid grid-cols-6 items-center gap-2">
+                                            <h4 className="w-fit">3</h4>
+                                            <div className="col-span-4">
+                                                <Rating
+                                                    initialValue={3}
+                                                    disabled
+                                                />
+                                            </div>
+                                            <h4 className="col-span-1 mr-2 w-[60px]">
+                                                ( 1 )
+                                            </h4>
+                                        </div>
+                                        <div className="mt-2 grid grid-cols-6 items-center gap-2">
+                                            <h4 className="w-fit">4</h4>
+                                            <div className="col-span-4">
+                                                <Rating
+                                                    initialValue={4}
+                                                    disabled
+                                                />
+                                            </div>
+                                            <h4 className="col-span-1 mr-2 w-[60px]">
+                                                ( 1 )
+                                            </h4>
+                                        </div>
+                                        <div className="mt-2 grid grid-cols-6 items-center gap-2">
+                                            <h4 className="w-fit">5</h4>
+                                            <div className="col-span-4">
+                                                <Rating
+                                                    initialValue={5}
+                                                    disabled
+                                                />
+                                            </div>
+                                            <h4 className="col-span-1 mr-2 w-[60px]">
+                                                ( 1 )
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div className="mx-auto flex h-full items-center">
+                                        <div className="text-center">
+                                            <h2 className="text-6xl font-semibold">
+                                                4.6
+                                            </h2>
+                                            <Rating initialValue={5} disabled />
+                                            <h4 className="text-lg">
+                                                ( 1 Ulasan )
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <Button
+                                    onClick={openModalForm}
+                                    className="roundex-xl mx-auto my-2 flex cursor-pointer items-center gap-2 bg-[#E5FFE6] text-black shadow-md  hover:overflow-visible hover:bg-[#E5FFE6]"
+                                >
+                                    <FaThumbsUp /> Berikan Ulasan
+                                </Button>
+                                {isModalOpen && (
+                                    <RatingModalForm
+                                        closeModal={closeModal}
+                                        idUmkm={id}
+                                    />
+                                )}
+                            </div>
+
+                            <hr />
+                        </section>
                     </Tabs.Content>
 
                     <Tabs.Content
