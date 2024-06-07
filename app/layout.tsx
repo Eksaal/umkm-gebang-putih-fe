@@ -8,6 +8,8 @@ import StoreInitializer from '@/store/StoreInitializer'
 import { useAuth } from '@/hooks/useAuth'
 import { unstable_noStore as noStore } from 'next/cache'
 import Navbar from '@/components/shared/Navbar'
+import '@radix-ui/themes/styles.css'
+import { Theme } from '@radix-ui/themes'
 
 const poppins = Poppins({
     subsets: ['latin'],
@@ -39,8 +41,10 @@ export default async function RootLayout({
             >
                 <StoreInitializer auth={user} />
                 <main>
-                    <Navbar />
-                    {children}
+                    <Theme>
+                        <Navbar />
+                        {children}
+                    </Theme>
                 </main>
                 <Toaster />
             </body>

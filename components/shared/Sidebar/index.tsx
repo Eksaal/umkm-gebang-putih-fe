@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Card from '../Card'
 import { useUmkm } from '@/hooks/useUMKM'
 import { UmkmMeta } from '@/app/umkm/page'
+import DetilModal from '../DetailModal'
 
 interface ISidebarProps {}
 
@@ -19,6 +20,8 @@ interface CardData {
 
 const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
     const { getMetaUmkm } = useUmkm()
+    const [isOpen, setIsOpen] = useState(false)
+    const [selectedId, setSelectedId] = useState<number>(0)
     const [locations, setLocations] = useState<UmkmMeta[]>([])
 
     const cleanType = (type: string) => type.replace(/[\[\]"]/g, '').trim()
@@ -74,10 +77,20 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
         return matchesName && matchesType
     })
 
+    const handleClick = (id: number) => {
+        setSelectedId(id)
+        setIsOpen(true)
+    }
+
     return (
         <div
             className={`${filteredCards.length < 1 ? '' : 'bg-white'} z-20 min-h-screen min-w-[543px] pt-16 `}
         >
+            <DetilModal
+                id={selectedId}
+                isOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+            />
             <div className="mb-5 flex gap-4 px-6">
                 <div className="relative my-4 w-2/3">
                     <input
@@ -111,12 +124,14 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
                         {filteredCards.map((card, index) => (
                             <Card
                                 key={index}
+                                id={card.id}
                                 name={card.name}
                                 rating={5}
                                 // rating={card.rating}
                                 address={card.address}
                                 type={card.category}
                                 image={card.pictures}
+                                onClick={handleClick}
                             />
                         ))}
                     </div>

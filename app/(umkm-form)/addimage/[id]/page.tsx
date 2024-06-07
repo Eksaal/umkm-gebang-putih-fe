@@ -2,15 +2,16 @@
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useUmkmForm } from '@/hooks/useUMKMForm'
 import { useState } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation' // Import useParams
 import AuthRedirect from '@/components/provider/AuthRedirect'
 
 export default function ImageUploadForm() {
     const router = useRouter()
-    const { id } = useParams()
+    const { id } = useParams() // Get the dynamic id from the URL
     const [imageBase64, setImageBase64] = useState<string | null>(null)
     const [menuImageBase64, setMenuImageBase64] = useState<string | null>(null)
 
@@ -53,7 +54,7 @@ export default function ImageUploadForm() {
                 menu_image: menuImageBase64,
             }
             await storePicture(formData)
-            router.push('/regisumkm')
+            router.refresh()
         } catch (error) {
             console.error(error)
         }

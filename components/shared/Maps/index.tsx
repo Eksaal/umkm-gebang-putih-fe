@@ -30,6 +30,7 @@ const createCustomIcon = () => {
 
 const Map: React.FC<MapProps> = ({ locations }) => {
     const router = useRouter()
+    console.log('dar', locations)
 
     const handleMarkerClick = (name: string) => {
         console.log('NAME', name)
