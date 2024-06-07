@@ -34,7 +34,7 @@ export default function Login({ setAuthState }: LoginProps) {
     }
 
     return (
-        <div className="mx-auto w-full max-w-[600px] space-y-[25px] rounded bg-white p-10">
+        <div className=" mx-auto w-full max-w-[600px] space-y-[25px] rounded bg-white p-10">
             <h1 className="text-center text-[22px] font-semibold leading-7">
                 Sign in
             </h1>
@@ -74,7 +74,7 @@ export default function Login({ setAuthState }: LoginProps) {
                     <Button
                         disabled={isSubmitting}
                         type="submit"
-                        className="w-full"
+                        className="w-full bg-green-500 hover:bg-green-400"
                     >
                         Login
                     </Button>

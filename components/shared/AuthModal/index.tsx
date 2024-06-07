@@ -33,8 +33,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     }
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="relative w-full max-w-md rounded-lg bg-white p-4 shadow-lg">
+        <div className="bg fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="relative w-full max-w-md rounded-lg bg-white shadow-lg">
                 <div className="flex justify-end p-2">
                     <GoX
                         onClick={onClose}
