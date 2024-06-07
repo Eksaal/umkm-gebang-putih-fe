@@ -7,18 +7,19 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { useUmkmForm } from '@/hooks/useUMKMForm'
 import { useState } from 'react'
 
-interface DropdownCheckbox {
+interface DropdownCheckboxProps {
     label: string
     options: any
     register: any
     name: string
 }
+
 const DropdownCheckbox = ({
     label,
     options,
     register,
     name,
-}: DropdownCheckbox) => {
+}: DropdownCheckboxProps) => {
     const [open, setOpen] = useState(false)
 
     return (
@@ -63,37 +64,52 @@ export default function UmkmDataForm() {
     } = useForm<any>({
         defaultValues: {
             name: '',
-            category: '',
+            category: [],
             product_type: '',
-            business_type: '',
             business_address: '',
             business_contact: '',
             contact_name: '',
-            opening_days: [],
-            special_closing_days: '',
             opening_hours: {
-                senin: {},
-                selasa: {},
-                rabu: {},
-                kamis: {},
-                jumat: {},
-                sabtu: {},
-                minggu: {},
+                senin: { open: false, open_time: '', close_time: '' },
+                selasa: { open: false, open_time: '', close_time: '' },
+                rabu: { open: false, open_time: '', close_time: '' },
+                kamis: { open: false, open_time: '', close_time: '' },
+                jumat: { open: false, open_time: '', close_time: '' },
+                sabtu: { open: false, open_time: '', close_time: '' },
+                minggu: { open: false, open_time: '', close_time: '' },
             },
             services: [],
             payment_methods: [],
             facilities: [],
             latitude: 0,
             longitude: 0,
-            food_price: '',
-            drink_price: '',
+            min_price: '',
+            max_price: '',
         },
     })
 
     const handleForm: SubmitHandler<any> = async (data) => {
         try {
-            storeData(data)
-            router.refresh()
+            const formattedData = {
+                name: data.name,
+                category: JSON.stringify(data.category),
+                product_type: data.product_type,
+                business_address: data.business_address,
+                business_contact: data.business_contact,
+                contact_name: data.contact_name,
+                opening_hours: JSON.stringify(data.opening_hours),
+                services: JSON.stringify(data.services),
+                payment_methods: JSON.stringify(data.payment_methods),
+                facilities: JSON.stringify(data.facilities),
+                latitude: data.latitude,
+                longitude: data.longitude,
+                min_price: data.min_price,
+                max_price: data.max_price,
+            }
+
+            const response = await storeData(formattedData)
+
+            console.log('RES', response)
         } catch (error) {
             console.error(error)
         }
@@ -307,7 +323,7 @@ export default function UmkmDataForm() {
                             Rentang Harga
                         </label>
                         <Input
-                            {...register('food_price', {
+                            {...register('min_price', {
                                 required: 'Harga Makanan is required',
                             })}
                             required
@@ -316,7 +332,7 @@ export default function UmkmDataForm() {
                             className="rounded border border-gray-300 p-2"
                         />
                         <Input
-                            {...register('drink_price', {
+                            {...register('max_price', {
                                 required: 'Harga Minuman is required',
                             })}
                             required
