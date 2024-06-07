@@ -21,11 +21,17 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
     const { getMetaUmkm } = useUmkm()
     const [locations, setLocations] = useState<UmkmMeta[]>([])
 
+    const cleanType = (type: string) => type.replace(/[\[\]"]/g, '').trim()
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data: UmkmMeta[] = await getMetaUmkm()
-                setLocations(data)
+                const cleanedData = data.map((item) => ({
+                    ...item,
+                    category: cleanType(item.category),
+                }))
+                setLocations(cleanedData)
             } catch (error) {
                 console.error('Error fetching UMKM data:', error)
             }
@@ -33,6 +39,7 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
 
         fetchData()
     }, [])
+
     const [searchTerm, setSearchTerm] = useState<string>('')
     const [selectedType, setSelectedType] = useState<string>('All')
 
