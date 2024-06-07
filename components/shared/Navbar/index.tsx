@@ -1,21 +1,19 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
 import AuthModal from '@/components/shared/AuthModal'
 import { Button } from '@/components/ui/button'
 import NavLinks from '@/components/shared/links/Navlinks'
+import { useAuthModalStore } from '@/store/useAuthModalStore'
 
 export default function Navbar() {
-    const [isModalOpen, setModalOpen] = useState(false)
+    const { openModal, closeModal, isOpen } = useAuthModalStore()
 
     const handleOpenModal = () => {
-        setModalOpen(true)
+        openModal('login')
     }
 
-    const handleCloseModal = () => {
-        setModalOpen(false)
-    }
     return (
-        <nav className="absolute  z-50 flex h-16 w-full items-center bg-green-100 px-16">
+        <nav className="z-50 flex h-16 w-full items-center bg-green-100 px-16">
             <h2 className="text-xl font-extrabold">
                 <span className="text-green-500">UMKM</span> GEBANG PUTIH
             </h2>
@@ -31,7 +29,7 @@ export default function Navbar() {
                     Login
                 </Button>
             </div>
-            <AuthModal isOpen={isModalOpen} onClose={handleCloseModal} />
+            <AuthModal />
         </nav>
     )
 }

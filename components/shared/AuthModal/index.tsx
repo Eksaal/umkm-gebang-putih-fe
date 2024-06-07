@@ -1,19 +1,13 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
+import { GoX } from 'react-icons/go'
+import { useAuthModalStore } from '@/store/useAuthModalStore'
 import Login from './login'
 import ForgotPassword from './forgot-password'
 import Register from './register'
-import { GoX } from 'react-icons/go'
 
-interface AuthModalProps {
-    isOpen: boolean
-    onClose: () => void
-}
-
-type AuthState = 'login' | 'forgot-password' | 'register'
-
-const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
-    const [authState, setAuthState] = useState<AuthState>('login') // default state
+const AuthModal: React.FC = () => {
+    const { isOpen, authState, closeModal, setAuthState } = useAuthModalStore()
 
     const renderComponent = () => {
         switch (authState) {
@@ -27,7 +21,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 return null
         }
     }
-
+    console.log(isOpen)
     if (!isOpen) {
         return null
     }
@@ -37,7 +31,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             <div className="relative w-full max-w-md rounded-lg bg-white shadow-lg">
                 <div className="flex justify-end p-2">
                     <GoX
-                        onClick={onClose}
+                        onClick={closeModal}
                         size={25}
                         className="cursor-pointer text-gray-600 hover:text-gray-900"
                     />

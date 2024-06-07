@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useUmkmForm } from '@/hooks/useUMKMForm'
 import { useState } from 'react'
+import AuthRedirect from '@/components/provider/AuthRedirect'
 
 interface DropdownCheckboxProps {
     label: string
@@ -24,6 +25,7 @@ const DropdownCheckbox = ({
 
     return (
         <div className="relative">
+            <AuthRedirect />
             <button
                 type="button"
                 className="w-full rounded border border-gray-300 p-2"

@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { useUmkmForm } from '@/hooks/useUMKMForm'
 import { useState } from 'react'
 import { useParams } from 'next/navigation' // Import useParams
+import AuthRedirect from '@/components/provider/AuthRedirect'
 
 export default function ImageUploadForm() {
     const router = useRouter()
@@ -61,6 +62,7 @@ export default function ImageUploadForm() {
 
     return (
         <div className="mx-auto w-full max-w-[900px] space-y-8 rounded bg-white py-28">
+            <AuthRedirect />
             <h1 className="text-center text-[22px] font-semibold leading-7">
                 Upload Images
             </h1>
