@@ -33,6 +33,11 @@ export default function ImageUploadForm() {
     ) => {
         const file = e.target.files?.[0]
         if (file) {
+            // Check if file size is greater than 10MB
+            if (file.size > 10 * 1024 * 1024) {
+                console.error('File size exceeds the maximum limit of 10MB')
+                return
+            }
             const reader = new FileReader()
             reader.onloadend = () => {
                 setImage(reader.result as string)

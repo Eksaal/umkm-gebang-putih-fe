@@ -110,9 +110,6 @@ export default function UmkmDataForm() {
             }
 
             const response = await storeData(formattedData)
-            console.log(response.data)
-            console.log(response)
-
             router.push(`/addimage/${response.data}`)
         } catch (error) {
             console.error(error)

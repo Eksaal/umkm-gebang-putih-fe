@@ -21,7 +21,6 @@ const AuthModal: React.FC = () => {
                 return null
         }
     }
-    console.log(isOpen)
     if (!isOpen) {
         return null
     }
