@@ -12,7 +12,7 @@ export interface UmkmMeta {
     latitude: number
     longitude: number
     pictures: string
-    totalReviews: number,
+    totalReviews: number
     averageRating: number
 }
 

@@ -1,39 +1,50 @@
-// components/shared/Maps.tsx
 'use client'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 import { useRouter } from 'next/navigation'
 import 'leaflet/dist/leaflet.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
-
-export interface UmkmMeta {
-    id: number
-    name: string
-    category: string
-    address: string
-    latitude: number
-    longitude: number
-    pictures: string
-}
+import { UmkmMeta } from '@/app/umkm/page'
 
 interface MapProps {
     locations: UmkmMeta[]
 }
 
-const createCustomIcon = () => {
+const createCustomIcon = (color: string, name: string) => {
     return L.divIcon({
-        html: `<div style="color: red; font-size: 24px;"><i class="fas fa-map-marker-alt"></i></div>`,
+        html: `<div style="font-size: 16px; text-align: center;"><i class="fas fa-map-marker-alt" style="color: ${color}; font-size: 24px;"></i><br/><span style="font-size: 12px; white-space: nowrap; display: block; margin: 0 auto; color: black;">${name}</span></div>`,
         className: '',
     })
 }
 
 const Map: React.FC<MapProps> = ({ locations }) => {
     const router = useRouter()
-    console.log('dar', locations)
+    const [searchTerm, setSearchTerm] = useState<string>('')
+    const [selectedType, setSelectedType] = useState<string>('All')
+
+    const searchParamss = new URLSearchParams(window.location.search)
+    useEffect(() => {
+        const searchParams = new URLSearchParams(window.location.search)
+        const search = searchParams.get('search') || ''
+        const type = searchParams.get('type') || 'All'
+        setSearchTerm(search)
+        setSelectedType(type)
+    }, [searchParamss])
+
+    const cleanType = (type: string) => type.replace(/[\[\]"]/g, '').trim()
+
+    const filteredLocations = locations.filter((location) => {
+        const matchesName = location.name
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())
+        const cleanedType = cleanType(location.category)
+        const matchesType =
+            selectedType === 'All' || cleanedType === selectedType
+        return matchesName && matchesType
+    })
 
     const handleMarkerClick = (name: string) => {
-        console.log('NAME', name)
         const searchUrl = `/umkm?search=${encodeURIComponent(name)}`
         router.push(searchUrl)
     }
@@ -48,10 +59,13 @@ const Map: React.FC<MapProps> = ({ locations }) => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
-            {locations.map((location) => (
+            {filteredLocations.map((location) => (
                 <Marker
                     key={location.id}
-                    icon={createCustomIcon()}
+                    icon={createCustomIcon(
+                        location.category === 'Makanan' ? 'red' : 'green',
+                        location.name,
+                    )}
                     position={[location.latitude, location.longitude]}
                     eventHandlers={{
                         click: () => handleMarkerClick(location.name),
