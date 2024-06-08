@@ -83,8 +83,8 @@ export default function UmkmDataForm() {
             services: [],
             payment_methods: [],
             facilities: [],
-            latitude: 0,
-            longitude: 0,
+            latitude: -7.18619,
+            longitude: 112.1793071,
             min_price: '',
             max_price: '',
         },
@@ -305,7 +305,7 @@ export default function UmkmDataForm() {
                             required
                             type="number"
                             step="0.000001"
-                            placeholder="Latitude"
+                            placeholder="7.8126369"
                             className="flex-1 rounded border border-gray-300 p-2"
                         />
                         <Input
@@ -315,7 +315,7 @@ export default function UmkmDataForm() {
                             required
                             type="number"
                             step="0.000001"
-                            placeholder="Longitude"
+                            placeholder="7.296831"
                             className="flex-1 rounded border border-gray-300 p-2"
                         />
                     </div>

@@ -43,7 +43,7 @@ export default function ImageUploadForm() {
 
     const handleForm: SubmitHandler<any> = async (data) => {
         if (!imageBase64 || !menuImageBase64) {
-            console.error('Both images are required')
+            console.error('Dua gambar wajib diisi')
             return
         }
 
@@ -65,15 +65,17 @@ export default function ImageUploadForm() {
         <div className="mx-auto w-full max-w-[900px] space-y-8 rounded bg-white py-28">
             <AuthRedirect />
             <h1 className="text-center text-[22px] font-semibold leading-7">
-                Upload Images
+                Upload Foto
             </h1>
 
             <form className="space-y-4" onSubmit={handleSubmit(handleForm)}>
                 <div className="flex flex-col">
-                    <label className="form-label mb-2 font-medium">Image</label>
+                    <label className="form-label mb-2 font-medium">
+                        Foto Toko
+                    </label>
                     <Input
                         {...register('image', {
-                            required: 'Image is required',
+                            required: 'Gambar wajib diisi',
                         })}
                         type="file"
                         accept="image/*"
@@ -84,11 +86,11 @@ export default function ImageUploadForm() {
 
                 <div className="flex flex-col">
                     <label className="form-label mb-2 font-medium">
-                        Menu Image
+                        Foto Menu
                     </label>
                     <Input
                         {...register('menu_image', {
-                            required: 'Menu Image is required',
+                            required: 'Gambar Menu wajib diisi',
                         })}
                         type="file"
                         accept="image/*"
