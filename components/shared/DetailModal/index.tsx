@@ -11,6 +11,7 @@ import {
     FaCheck,
     FaX,
     FaThumbsUp,
+    FaUser,
 } from 'react-icons/fa6'
 import OpeningHours from '../OpeningHours'
 import RatingModalForm from '../RatingModalForm'
@@ -114,9 +115,14 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                 <h1 className="text-2xl">{data.name}</h1>
                 <p className="text-sm">{data.business_address}</p>
                 <div className="flex flex-row items-center gap-2 text-lg">
-                    <h4>4.6</h4>
-                    <Rating initialValue={4.6} disabled />
-                    <h4>(12)</h4>
+                    <h4>{data.averageRating ? data.averageRating : 0}</h4>
+                    <Rating
+                        initialValue={
+                            data.averageRating ? data.averageRating : 0
+                        }
+                        disabled
+                    />
+                    <h4>({data.totalReviews ? data.totalReviews : 0} )</h4>
                 </div>
             </div>
             <div className="mx-auto -mt-5 px-5">
@@ -211,7 +217,11 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                                                 />
                                             </div>
                                             <h4 className="col-span-1 mr-2 w-[60px]">
-                                                ( 1 )
+                                                ({' '}
+                                                {data.ratingCounts
+                                                    ? data.ratingCounts[1]
+                                                    : 0}
+                                                )
                                             </h4>
                                         </div>
                                         <div className="mt-2 grid grid-cols-6 items-center gap-2">
@@ -223,7 +233,11 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                                                 />
                                             </div>
                                             <h4 className="col-span-1 mr-2 w-[60px]">
-                                                ( 1 )
+                                                ({' '}
+                                                {data.ratingCounts
+                                                    ? data.ratingCounts[2]
+                                                    : 0}
+                                                )
                                             </h4>
                                         </div>
                                         <div className="mt-2 grid grid-cols-6 items-center gap-2">
@@ -235,7 +249,11 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                                                 />
                                             </div>
                                             <h4 className="col-span-1 mr-2 w-[60px]">
-                                                ( 1 )
+                                                ({' '}
+                                                {data.ratingCounts
+                                                    ? data.ratingCounts[3]
+                                                    : 0}
+                                                )
                                             </h4>
                                         </div>
                                         <div className="mt-2 grid grid-cols-6 items-center gap-2">
@@ -247,7 +265,11 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                                                 />
                                             </div>
                                             <h4 className="col-span-1 mr-2 w-[60px]">
-                                                ( 1 )
+                                                ({' '}
+                                                {data.ratingCounts
+                                                    ? data.ratingCounts[4]
+                                                    : 0}
+                                                )
                                             </h4>
                                         </div>
                                         <div className="mt-2 grid grid-cols-6 items-center gap-2">
@@ -259,18 +281,35 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                                                 />
                                             </div>
                                             <h4 className="col-span-1 mr-2 w-[60px]">
-                                                ( 1 )
+                                                ({' '}
+                                                {data.ratingCounts
+                                                    ? data.ratingCounts[5]
+                                                    : 0}
+                                                )
                                             </h4>
                                         </div>
                                     </div>
                                     <div className="mx-auto flex h-full items-center">
                                         <div className="text-center">
                                             <h2 className="text-6xl font-semibold">
-                                                4.6
+                                                {data.averageRating
+                                                    ? data.averageRating
+                                                    : 0}
                                             </h2>
-                                            <Rating initialValue={5} disabled />
+                                            <Rating
+                                                initialValue={
+                                                    data.averageRating
+                                                        ? data.averageRating
+                                                        : 0
+                                                }
+                                                disabled
+                                            />
                                             <h4 className="text-lg">
-                                                ( 1 Ulasan )
+                                                ({' '}
+                                                {data.totalReviews
+                                                    ? data.totalReviews
+                                                    : 0}{' '}
+                                                Ulasan )
                                             </h4>
                                         </div>
                                     </div>
@@ -288,8 +327,51 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                                     />
                                 )}
                             </div>
-
                             <hr />
+                            <div className="mt-4 space-y-4">
+                                {data.reviews &&
+                                    data.reviews.length > 0 &&
+                                    data.reviews.map((review: any) => (
+                                        <div
+                                            key={review.id}
+                                            className="review flex items-center gap-4"
+                                        >
+                                            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-50">
+                                                <FaUser size={24} />
+                                            </div>
+                                            <div className="content-column">
+                                                <h3 className="font-semibold">
+                                                    {review.name}
+                                                </h3>
+                                                <Rating
+                                                    initialValue={review.rating}
+                                                    disabled
+                                                />
+                                                <p className="text-sm text-gray-500">
+                                                    {new Date(
+                                                        review.created_at,
+                                                    ).toLocaleDateString(
+                                                        'id-ID',
+                                                        {
+                                                            day: 'numeric',
+                                                            month: 'long',
+                                                            year: 'numeric',
+                                                            hour: 'numeric',
+                                                            minute: 'numeric',
+                                                        },
+                                                    )}
+                                                </p>
+                                                <p className="text-gray-800">
+                                                    {review.comment}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                {(!data.reviews ||
+                                    data.reviews.length === 0) && (
+                                    <p>No reviews available.</p>
+                                )}
+                            </div>
                         </section>
                     </Tabs.Content>
 

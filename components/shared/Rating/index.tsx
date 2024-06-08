@@ -1,5 +1,4 @@
-'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaStar } from 'react-icons/fa'
 
 interface IRatingProps {
@@ -15,6 +14,11 @@ const Rating: React.FunctionComponent<IRatingProps> = ({
 }) => {
     const [rating, setRating] = useState<number>(initialValue)
     const [hover, setHover] = useState<number | null>(null)
+
+    // Update rating when initialValue changes
+    useEffect(() => {
+        setRating(initialValue)
+    }, [initialValue])
 
     const handleClick = (index: number) => {
         if (!disabled) {
