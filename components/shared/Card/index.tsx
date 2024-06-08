@@ -15,8 +15,6 @@ interface ICardProps {
     onClick: (id: number) => void
 }
 
-const imagePath = process.env.NEXT_PUBLIC_IMAGE_URL
-
 const Card: React.FunctionComponent<ICardProps> = ({
     id,
     image,
@@ -33,7 +31,7 @@ const Card: React.FunctionComponent<ICardProps> = ({
             onClick={() => onClick(id)}
         >
             <Image
-                src={`${imagePath}${image}`}
+                src={image}
                 alt="hero-image"
                 height={218}
                 width={242}
