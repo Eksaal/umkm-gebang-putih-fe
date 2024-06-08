@@ -24,6 +24,7 @@ interface IDetilModalProps {
     onClose: () => void
 }
 
+const imagePath = process.env.NEXT_PUBLIC_IMAGE_URL
 const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
     const { loggedIn } = useAuth()
     const { openModal } = useAuthModalStore()
@@ -95,7 +96,7 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
         >
             {data.pictures.length > 0 && (
                 <Image
-                    src={`http://localhost:3333/${data.pictures[0].picture_path}`}
+                    src={`${imagePath}${data.pictures[0].picture_path}`}
                     alt="hero-image"
                     height={200}
                     width={540}
