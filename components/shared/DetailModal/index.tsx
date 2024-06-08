@@ -108,7 +108,7 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
             <FaX
                 size={30}
                 onClick={onClose}
-                className="absolute right-4 top-4 cursor-pointer rounded-full p-1 text-xl text-white hover:text-blue-300"
+                className="absolute right-4 top-4 cursor-pointer rounded-full p-1 text-xl text-white hover:text-blue-500"
             />
 
             <div className="mx-auto px-10 py-2">

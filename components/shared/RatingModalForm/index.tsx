@@ -45,7 +45,7 @@ const ModalForm: React.FC<ModalFormProps> = ({ closeModal, idUmkm }) => {
             <div className="relative flex min-h-screen items-center justify-center">
                 <div className="relative w-96 rounded bg-white p-8 shadow-lg">
                     <FaX
-                        className="absolute right-0 top-0 cursor-pointer p-2 text-green-400"
+                        className="absolute right-0 top-0 cursor-pointer p-2 text-green-400 hover:text-blue-600"
                         size={35}
                         onClick={closeModal}
                     />
