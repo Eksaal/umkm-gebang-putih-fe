@@ -31,7 +31,7 @@ const Card: React.FunctionComponent<ICardProps> = ({
             onClick={() => onClick(id)}
         >
             <Image
-                src={image}
+                src={image[0]}
                 alt="hero-image"
                 height={218}
                 width={242}

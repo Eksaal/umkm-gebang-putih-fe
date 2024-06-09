@@ -102,6 +102,7 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                     className="h-[200px] w-[540px] object-cover"
                 />
             )}
+
             <h3 className="absolute left-4 top-4 rounded-md bg-blue-400 px-3 py-2 text-white">
                 {data.category}
             </h3>
@@ -383,7 +384,7 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                         <div className="mx-auto">
                             {data.pictures.length > 0 && (
                                 <Image
-                                    src={`http://localhost:3333/${data.pictures[0].menu_picture_path}`}
+                                    src={data.pictures[0].menu_picture_path}
                                     alt="gallery-image"
                                     height={160}
                                     width={120}
