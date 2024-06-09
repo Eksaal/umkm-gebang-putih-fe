@@ -3,6 +3,7 @@ import React from 'react'
 import Footer from '@/components/shared/Footer'
 import Image from 'next/image'
 import BannerImage from '@/public/homepage/hero.png'
+import UmkmImage from '@/public/homepage/shop.png'
 import { BiSolidLike, BiLocationPlus, BiBowlHot } from 'react-icons/bi'
 import { useAuthModalStore } from '@/store/useAuthModalStore'
 import { useAuth } from '@/hooks/useAuth'
@@ -56,6 +57,12 @@ const HomePage: React.FunctionComponent = () => {
                         setiap UMKMnya!!
                     </p>
                 </section>
+                <Image
+                    src={UmkmImage}
+                    alt="hero-image"
+                    height={420}
+                    width={536}
+                />
             </section>
             <section className="w-full pb-20">
                 <h3 className="text-center text-lg">
