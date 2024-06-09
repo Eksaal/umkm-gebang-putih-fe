@@ -5,7 +5,8 @@ import { useUmkm } from '@/hooks/useUMKM'
 import Rating from '../Rating'
 import * as Tabs from '@radix-ui/react-tabs'
 import { useAuthModalStore } from '@/store/useAuthModalStore'
-import CloudinaryImage from '../CloudinaryImage'
+import Lightbox from 'react-image-lightbox'
+import 'react-image-lightbox/style.css'
 import {
     FaPhoneVolume,
     FaMoneyBill,
@@ -26,6 +27,7 @@ interface IDetilModalProps {
 }
 
 const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
+    const [isView, setIsView] = useState(false)
     const { loggedIn } = useAuth()
     const { openModal } = useAuthModalStore()
     const { getUmkm } = useUmkm()
@@ -387,13 +389,13 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                             <h3 className="pb-3 pt-5 text-lg">Foto</h3>
                             <div className="mx-auto">
                                 {data.pictures.length > 0 && (
-                                    <CloudinaryImage
-                                        url={data.pictures[0].menu_picture_path}
-                                        preview
+                                    <Image
+                                        src={data.pictures[0].menu_picture_path}
                                         alt="gallery-image"
                                         height={160}
                                         width={120}
                                         className="h-[160px] w-[120px] object-cover"
+                                        onClick={() => setIsView(true)}
                                     />
                                 )}
                             </div>
@@ -401,6 +403,14 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                     </Tabs.Root>
                 </div>
             </div>
+            {isView && (
+                <div className="absolute bottom-32 left-[560px] right-96 top-80 flex items-start justify-center">
+                    <Lightbox
+                        mainSrc={data.pictures[0].menu_picture_path}
+                        onCloseRequest={() => setIsView(false)}
+                    />
+                </div>
+            )}
         </>
     )
 }
