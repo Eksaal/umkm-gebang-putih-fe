@@ -5,6 +5,7 @@ import { useUmkm } from '@/hooks/useUMKM'
 import Rating from '../Rating'
 import * as Tabs from '@radix-ui/react-tabs'
 import { useAuthModalStore } from '@/store/useAuthModalStore'
+import Lightbox from 'react-image-lightbox'
 import {
     FaPhoneVolume,
     FaMoneyBill,
@@ -25,6 +26,7 @@ interface IDetilModalProps {
 }
 
 const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
+    const [isView, setIsView] = useState(false)
     const { loggedIn } = useAuth()
     const { openModal } = useAuthModalStore()
     const { getUmkm } = useUmkm()
@@ -389,9 +391,16 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                                     height={160}
                                     width={120}
                                     className="h-[160px] w-[120px] object-cover"
+                                    onClick={() => setIsView(true)}
                                 />
                             )}
                         </div>
+                        {isView && (
+                            <Lightbox
+                                mainSrc={data.pictures[0].menu_picture_path}
+                                onCloseRequest={() => setIsView(false)}
+                            />
+                        )}
                     </Tabs.Content>
                 </Tabs.Root>
             </div>
