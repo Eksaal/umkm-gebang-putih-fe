@@ -27,8 +27,8 @@ export default function Navbar() {
             <h2 className="text-xl font-extrabold">
                 <Image
                     src={'/homepage/logoweb.png'}
-                    width={30}
-                    height={20}
+                    width={35}
+                    height={35}
                     alt="logo"
                     className="inline-block align-text-top mr-2" style={{marginLeft:'20px', marginTop:'10px'}}
                 />
