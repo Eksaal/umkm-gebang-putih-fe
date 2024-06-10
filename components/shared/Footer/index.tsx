@@ -1,5 +1,6 @@
 import React from 'react'
 import { FaPhone, FaMapMarkerAlt, FaEnvelope } from 'react-icons/fa'
+import { FaMessage } from "react-icons/fa6";
 
 const contacts = [
     {
@@ -13,6 +14,10 @@ const contacts = [
     {
         icon: <FaEnvelope />,
         text: 'info@umkmgebangputih.com',
+    },
+    {
+        icon: <FaMessage />,
+        text: 'https://its.id/m/SurveiKepuasanUMKMGebangPutih',
     },
 ]
 
