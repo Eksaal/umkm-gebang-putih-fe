@@ -1,5 +1,6 @@
 import React from 'react'
 import { FaPhone, FaMapMarkerAlt, FaEnvelope } from 'react-icons/fa'
+import { FaMessage } from "react-icons/fa6";
 import Image from 'next/image'
 
 const contacts = [
@@ -15,6 +16,10 @@ const contacts = [
         icon: <FaEnvelope />,
         text: 'umkmgebangid@gmail.com',
     },
+    {
+        icon: <FaMessage />,
+        text: 'https://its.id/m/SurveyKepuasanUMKMGebangPutih'
+    }
 ]
 
 export default function Footer() {
