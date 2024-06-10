@@ -30,7 +30,7 @@ export default function Navbar() {
                     width={30}
                     height={20}
                     alt="logo"
-                    className="inline-block align-text-top mr-2" style={{marginLeft:'20px'}}
+                    className="inline-block align-text-top mr-2" style={{marginLeft:'20px', marginTop:'10px'}}
                 />
                 <span className="text-green-500">UMKM</span> GEBANG PUTIH
             </h2>
