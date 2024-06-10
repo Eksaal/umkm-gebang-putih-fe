@@ -14,3 +14,4 @@ It's designed to help kickstart project with any backend frameworks. I have prov
 -   copy .env.example to .env
 -   Run command: npm install
 -   Start development: npm run dev
+salmaa
