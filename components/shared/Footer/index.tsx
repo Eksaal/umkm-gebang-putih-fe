@@ -18,7 +18,7 @@ const contacts = [
     },
     {
         icon: <FaMessage />,
-        text: 'https://its.id/m/SurveyKepuasanUMKMGebangPutih'
+        text: 'https://its.id/m/SurveyKepuasanUMKMGebangPutih',
     }
 ]
 
