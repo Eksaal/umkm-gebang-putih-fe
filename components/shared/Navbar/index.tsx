@@ -27,7 +27,7 @@ export default function Navbar() {
             <h2 className="text-xl font-extrabold">
                 <Image
                     src={'/homepage/logoweb.png'}
-                    width={15}
+                    width={30}
                     height={20}
                     alt="logo"
                     className="inline-block align-text-top mr-2" style={{marginLeft:'20px'}}
@@ -40,17 +40,15 @@ export default function Navbar() {
                 ))}
                 {loggedIn ? (
                     <Button
-                        size="sm"
                         onClick={handleLogout}
-                        className="rounded-full bg-green-500 px-5 font-semibold text-white hover:bg-green-400"
+                        className="rounded-full bg-green-500 px-5 font-semibold text-white hover:bg-green-400 text-sm py-2"
                     >
                         Logout
                     </Button>
                 ) : (
                     <Button
-                        size="sm"
                         onClick={handleOpenModal}
-                        className="rounded-full bg-green-500 px-5 font-semibold text-white hover:bg-green-400"
+                        className="rounded-full bg-green-500 px-5 font-semibold text-white hover:bg-green-400 text-sm py-2"
                     >
                         Login
                     </Button>
