@@ -7,12 +7,12 @@ import Link from 'next/link';
 const contacts = [
     {
         icon: <FaMapMarkerAlt />,
-        href: '/https://www.google.com/maps/place/Gebang+Putih,+Kec.+Sukolilo,+Surabaya,+Jawa+Timur/@-7.2819328,112.7867909,16z/data=!3m1!4b1!4m6!3m5!1s0x2dd7fa1487ff2801:0x790b0bf6776f8da2!8m2!3d-7.2833898!4d112.788207!16s%2Fg%2F121bk7y3?entry=ttu',
+        href: 'https://www.google.com/maps/place/Gebang+Putih,+Kec.+Sukolilo,+Surabaya,+Jawa+Timur/@-7.2819328,112.7867909,16z/data=!3m1!4b1!4m6!3m5!1s0x2dd7fa1487ff2801:0x790b0bf6776f8da2!8m2!3d-7.2833898!4d112.788207!16s%2Fg%2F121bk7y3?entry=ttu',
         text: 'Jalan Raya Gebang Putih, Surabaya',
     },
     {
         icon: <FaPhone />,
-        href: '/https://wa.me/6282250907901',
+        href: 'https://wa.me/6282250907901',
         text: '+62 822 5090 7901',
     },
     {
@@ -47,7 +47,7 @@ export default function Footer() {
                 <ul className="list-unstyled space-y-2">
                     {contacts.map((contact, index) => (
                         <li key={index} className="flex items-center gap-2">
-                            <Link href={contact.href}>
+                            <Link href={contact.href} className="flex items-center gap-2" >
                             <span className="text-green-600">
                                 {contact.icon}
                             </span>
