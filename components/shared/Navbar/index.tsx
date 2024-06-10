@@ -6,6 +6,7 @@ import NavLinks from '@/components/shared/links/Navlinks'
 import { useAuthModalStore } from '@/store/useAuthModalStore'
 import { useAuth } from '@/hooks/useAuth'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 export default function Navbar() {
     const { logout, loggedIn } = useAuth()
@@ -24,6 +25,13 @@ export default function Navbar() {
     return (
         <nav className="fixed z-50 flex h-16 w-full items-center bg-green-100 px-16">
             <h2 className="text-xl font-extrabold">
+                <Image
+                    src={'/homepage/logo.svg'}
+                    width={464}
+                    height={70}
+                    alt="logo"
+                    className="inline-block align-text-top mr-2" style={{marginLeft:'20px'}}
+                />
                 <span className="text-green-500">UMKM</span> GEBANG PUTIH
             </h2>
             <div className="ml-auto flex items-center space-x-9">
