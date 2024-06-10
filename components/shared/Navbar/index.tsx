@@ -28,6 +28,7 @@ export default function Navbar() {
                 <Image
                     src={'/homepage/logoweb.png'}
                     width={15}
+                    height={20}
                     alt="logo"
                     className="inline-block align-text-top mr-2" style={{marginLeft:'20px'}}
                 />
