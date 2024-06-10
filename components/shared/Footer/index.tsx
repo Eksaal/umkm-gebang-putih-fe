@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaPhone, FaMapMarkerAlt, FaEnvelope } from 'react-icons/fa'
-import { FaMessage } from "react-icons/fa6";
+import Image from 'next/image'
 
 const contacts = [
     {
@@ -15,15 +15,11 @@ const contacts = [
         icon: <FaEnvelope />,
         text: 'umkmgebangid@gmail.com',
     },
-    {
-        icon: <FaMessage />,
-        text: 'https://its.id/m/SurveiKepuasanUMKMGebangPutih',
-    },
 ]
 
 export default function Footer() {
     return (
-        <footer className="grid grid-cols-3 bg-green-100 px-[130px] py-10">
+        <footer className="grid grid-cols-3 items-center gap-16 bg-green-100 px-[130px] py-10">
             <div className=" mt-4">
                 <h5 className="text-uppercase text-lg font-bold">
                     Tentang Kami
@@ -48,6 +44,14 @@ export default function Footer() {
                         </li>
                     ))}
                 </ul>
+            </div>
+            <div className="">
+                <Image
+                    src={'/homepage/logo.svg'}
+                    width={464}
+                    height={70}
+                    alt="logo"
+                />
             </div>
         </footer>
     )
