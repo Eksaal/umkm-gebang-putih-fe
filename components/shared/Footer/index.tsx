@@ -9,11 +9,11 @@ const contacts = [
     },
     {
         icon: <FaPhone />,
-        text: '+62 123 4567 890',
+        text: '+62 822 5090 7901',
     },
     {
         icon: <FaEnvelope />,
-        text: 'info@umkmgebangputih.com',
+        text: 'umkmgebangid@gmail.com',
     },
     {
         icon: <FaMessage />,
