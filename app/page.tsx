@@ -2,8 +2,8 @@
 import React from 'react'
 import Footer from '@/components/shared/Footer'
 import Image from 'next/image'
-import BannerImage from '@/public/homepage/hero.png'
-import UmkmImage from '@/public/homepage/shop.png'
+import BannerImage from '@/public/homepage/heroo.png'
+import UmkmImage from '@/public/homepage/halo.png'
 import { BiSolidLike, BiLocationPlus, BiBowlHot } from 'react-icons/bi'
 import { useAuthModalStore } from '@/store/useAuthModalStore'
 import { useAuth } from '@/hooks/useAuth'
@@ -31,12 +31,12 @@ const HomePage: React.FunctionComponent = () => {
                     height={240}
                     width={1180}
                 />
-                <div className="absolute left-10 top-28 text-white">
+                <div className="absolute left-10 top-30 text-white">
                     <h2 className="text-5xl font-extrabold">
                         <span className="text-neutral-700">UMKM</span> GEBANG
                         PUTIH
                     </h2>
-                    <p className="pt-3 text-2xl">
+                    <p className="pt-3 text-2xl text-500">
                         Temukan UMKM di Gebang Putih
                     </p>
                 </div>
@@ -47,9 +47,10 @@ const HomePage: React.FunctionComponent = () => {
                         <h3 className="text-4xl font-bold">Hallo Sobat!!</h3>
                         <p>
                             UMKM Gebang Putih adalah project pengembangan
-                            website berbasis lokasi sebagai pemetaan UMKM di
-                            Kelurahan Gebang Putih, Kecamatan Sukolilo Surabaya
-                            sekaligus menjadi wadah promosi UMKM yang ada.
+                            website berbasis lokasi sebagai pemetaan UMKM 
+                            makanan dan minuman di Kelurahan Gebang Putih, 
+                            Kecamatan Sukolilo Surabaya sekaligus menjadi 
+                            wadah promosi UMKM yang ada.
                         </p>
                     </div>
                     <p className="text-green-500">
@@ -85,7 +86,7 @@ const HomePage: React.FunctionComponent = () => {
                         </div>
                     ))}
                 </div>
-                <div className="ove mt-10 flex h-80 items-center justify-center bg-umkm-fruit  bg-cover px-60">
+                <div className="ove mt-10 flex h-80 items-center justify-center bg-umkm bg-cover px-60">
                     <div className="w-1/3">
                         <button
                             onClick={handleDaftarUmkm}
@@ -96,7 +97,7 @@ const HomePage: React.FunctionComponent = () => {
                     </div>
                     <div className="w-2/3 px-10 text-center text-white">
                         <h3 className="text-5xl font-bold">
-                            Daftarkan UMKM anda!!
+                            Daftarkan UMKM Anda!!
                         </h3>
                         <p className=" pt-8 text-xl font-semibold">
                             Daftarkan UMKM anda untuk mendapatkan pelanggan dan

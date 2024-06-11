@@ -13,7 +13,7 @@ interface MapProps {
 
 const createCustomIcon = (color: string, name: string) => {
     return L.divIcon({
-        html: `<div style="font-size: 16px; text-align: center;"><i class="fas fa-map-marker-alt" style="color: ${color}; font-size: 24px;"></i><br/><span style="font-size: 12px; white-space: nowrap; display: block; margin: 0 auto; color: black;">${name}</span></div>`,
+        html: `<div style="font-size: 16px; text-align: center;"><i class="fas fa-map-marker-alt" style="color: ${color}; font-size: 18px;"></i><br/><span style="font-size: 10px; white-space: nowrap; display: block; margin: 0 auto; color: black;">${name}</span></div>`,
         className: '',
     })
 }

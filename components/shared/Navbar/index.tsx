@@ -26,11 +26,11 @@ export default function Navbar() {
         <nav className="fixed z-50 flex h-16 w-full items-center bg-green-100 px-16">
             <h2 className="text-xl font-extrabold">
                 <Image
-                    src={'/homepage/logoweb.png'}
-                    width={35}
-                    height={35}
+                    src={'/homepage/logo.png'}
+                    width={11}
+                    height={7}
                     alt="logo"
-                    className="inline-block align-text-top mr-2" style={{marginLeft:'20px', marginTop:'8px'}}
+                    className="inline-block align-text-top mr-2" style={{marginLeft:'20px', marginTop:'6px'}}
                 />
                 <span className="text-green-500">UMKM</span> GEBANG PUTIH
             </h2>
