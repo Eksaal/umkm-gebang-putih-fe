@@ -34,7 +34,7 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
             if (data.length === 0) {
                 setHasMore(false)
             } else {
-                const cleanedData = data.map((item) => ({
+                const cleanedData = data.map((item: any) => ({
                     ...item,
                     category: cleanType(item.category),
                 }))
