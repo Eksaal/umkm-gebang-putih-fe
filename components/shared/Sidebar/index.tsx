@@ -7,7 +7,6 @@ import Card from '../Card'
 import { useUmkm } from '@/hooks/useUMKM'
 import { UmkmMeta } from '@/app/umkm/page'
 import DetilModal from '../DetailModal'
-import debounce from 'lodash.debounce'
 
 interface ISidebarProps {}
 
@@ -122,7 +121,7 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
                 </div>
             </div>
             <div
-                className={`fixed inset-y-0  mt-32 flex flex-col gap-4 space-y-5 overflow-y-auto px-5 pt-3`}
+                className={`fixed inset-y-0 mt-32 flex flex-col gap-4 space-y-5 overflow-y-auto px-5 pt-3`}
                 style={{ maxHeight: 'calc(100vh - 4rem)' }}
             >
                 {filteredCards.length > 0 ? (
@@ -151,3 +150,15 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
 }
 
 export default Sidebar
+
+// Debounce function
+function debounce(func: (...args: any[]) => void, wait: number) {
+    let timeout: NodeJS.Timeout | null = null
+    return function (...args: any[]) {
+        if (timeout) clearTimeout(timeout)
+        timeout = setTimeout(() => {
+            timeout = null
+            func(...args)
+        }, wait)
+    }
+}
