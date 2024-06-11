@@ -6,6 +6,7 @@ import { useUmkm } from '@/hooks/useUMKM'
 import { UmkmMeta } from '@/app/umkm/page'
 import DetilModal from '../DetailModal'
 import Card from '../Card'
+import SkeletonCard from '@/components/SkeletonCard'
 
 interface ISidebarProps {}
 
@@ -15,7 +16,7 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
     const [selectedId, setSelectedId] = useState<number>(0)
     const [locations, setLocations] = useState<UmkmMeta[]>([])
     const [page, setPage] = useState(1)
-    const [limit] = useState(3) // Adjust the limit as needed
+    const [limit] = useState(10) // Adjust the limit as needed
     const [loading, setLoading] = useState(true)
     const [hasMore, setHasMore] = useState(true)
     const [searchTerm, setSearchTerm] = useState<string>('')
@@ -28,7 +29,8 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
 
     const fetchData = async (page: number, limit: number) => {
         try {
-            const data: UmkmMeta[] = await getMetaUmkm(page, limit)
+            const datarum: any = await getMetaUmkm(page, limit)
+            const data = datarum.data
             if (data.length === 0) {
                 setHasMore(false)
             } else {
@@ -162,6 +164,13 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
                                 />
                             </div>
                         ))}
+                        {loading && (
+                            <div>
+                                {[...Array(10)].map((_, index) => (
+                                    <SkeletonCard key={index} />
+                                ))}
+                            </div>
+                        )}
                     </div>
                 ) : (
                     <h1 className="py-2 text-lg"></h1>
