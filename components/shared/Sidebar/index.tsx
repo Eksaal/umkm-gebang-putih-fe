@@ -1,12 +1,13 @@
 'use client'
 import * as React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Card from '../Card'
 import { useUmkm } from '@/hooks/useUMKM'
 import { UmkmMeta } from '@/app/umkm/page'
 import DetilModal from '../DetailModal'
+import debounce from 'lodash.debounce'
 
 interface ISidebarProps {}
 
@@ -15,6 +16,8 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [selectedId, setSelectedId] = useState<number>(0)
     const [locations, setLocations] = useState<UmkmMeta[]>([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState<string | null>(null)
 
     const cleanType = (type: string) => type.replace(/[\[\]"]/g, '').trim()
 
@@ -27,13 +30,16 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
                     category: cleanType(item.category),
                 }))
                 setLocations(cleanedData)
+                setLoading(false)
             } catch (error) {
                 console.error('Error fetching UMKM data:', error)
+                setError('Failed to fetch data')
+                setLoading(false)
             }
         }
 
         fetchData()
-    }, [])
+    }, [getMetaUmkm])
 
     const [searchTerm, setSearchTerm] = useState<string>('')
     const [selectedType, setSelectedType] = useState<string>('All')
@@ -60,23 +66,33 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
         router.replace(`?${queryString}`, undefined)
     }, [searchTerm, selectedType, router])
 
-    const filteredCards = locations.filter((card) => {
-        const matchesName = card.name
-            .toLowerCase()
-            .includes(searchTerm.toLowerCase())
-        const matchesType =
-            selectedType === 'All' || card.category === selectedType
-        return matchesName && matchesType
-    })
+    const debouncedSetSearchTerm = useCallback(
+        debounce((value: string) => setSearchTerm(value), 300),
+        [],
+    )
+
+    const filteredCards = useMemo(() => {
+        return locations.filter((card) => {
+            const matchesName = card.name
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase())
+            const matchesType =
+                selectedType === 'All' || card.category === selectedType
+            return matchesName && matchesType
+        })
+    }, [locations, searchTerm, selectedType])
 
     const handleClick = (id: number) => {
         setSelectedId(id)
         setIsOpen(true)
     }
 
+    if (loading) return <div>Loading...</div>
+    if (error) return <div>{error}</div>
+
     return (
         <div
-            className={`${filteredCards.length < 1 ? '' : 'bg-white'} z-20 min-h-screen min-w-[543px] pt-16 `}
+            className={`${filteredCards.length < 1 ? '' : 'bg-white'} z-20 min-h-screen min-w-[543px] pt-16`}
         >
             <DetilModal
                 id={selectedId}
@@ -88,8 +104,7 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
                     <input
                         type="text"
                         placeholder="Search by name..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onChange={(e) => debouncedSetSearchTerm(e.target.value)}
                         className="w-full rounded-xl bg-white p-2 pl-10 shadow-md"
                     />
                     <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400" />
@@ -128,7 +143,7 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
                         ))}
                     </div>
                 ) : (
-                    <h1 className="py-2 text-lg"></h1>
+                    <h1 className="py-2 text-lg">No results found</h1>
                 )}
             </div>
         </div>
