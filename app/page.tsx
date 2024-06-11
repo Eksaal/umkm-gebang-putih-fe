@@ -85,7 +85,7 @@ const HomePage: React.FunctionComponent = () => {
                         </div>
                     ))}
                 </div>
-                <div className="ove mt-10 flex h-80 items-center justify-center bg-DAFTARKAN-UMKM-ANDA  bg-cover px-60">
+                <div className="ove mt-10 flex h-80 items-center justify-center DAFTARKAN-UMKM-ANDA  bg-cover px-60">
                     <div className="w-1/3">
                         <button
                             onClick={handleDaftarUmkm}
