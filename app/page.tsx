@@ -85,7 +85,7 @@ const HomePage: React.FunctionComponent = () => {
                         </div>
                     ))}
                 </div>
-                <div className="ove mt-10 flex h-80 items-center justify-center bg-umkm-fruit  bg-cover px-60">
+                <div className="ove mt-10 flex h-80 items-center justify-center bg-DAFTARKAN-UMKM-ANDA  bg-cover px-60">
                     <div className="w-1/3">
                         <button
                             onClick={handleDaftarUmkm}
@@ -96,7 +96,7 @@ const HomePage: React.FunctionComponent = () => {
                     </div>
                     <div className="w-2/3 px-10 text-center text-white">
                         <h3 className="text-5xl font-bold">
-                            Daftarkan UMKM anda!!
+                            Daftarkan UMKM Anda!!
                         </h3>
                         <p className=" pt-8 text-xl font-semibold">
                             Daftarkan UMKM anda untuk mendapatkan pelanggan dan
