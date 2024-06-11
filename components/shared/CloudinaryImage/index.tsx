@@ -74,7 +74,7 @@ const CloudinaryImage: React.FC<CloudinaryImageProps> = ({
                         : `${(+height / +width) * 100}%`,
                     cursor: preview ? 'zoom-in' : 'default',
                 }}
-                className="img-blur"
+                className={`img-blur h-[${height}] w-[${width}]`}
                 onClick={preview ? () => setIsOpen(true) : undefined}
             >
                 <style jsx>{`
