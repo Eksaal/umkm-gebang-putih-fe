@@ -39,7 +39,7 @@ export default function Login({ setAuthState }: LoginProps) {
     return (
         <div className=" mx-auto w-full max-w-[600px] space-y-[25px] rounded bg-white p-10">
             <h1 className="text-center text-[22px] font-semibold leading-7">
-                Sign in
+                Login
             </h1>
 
             <form className="space-y-4" onSubmit={handleSubmit(handleForm)}>
@@ -70,7 +70,7 @@ export default function Login({ setAuthState }: LoginProps) {
                         onClick={() => setAuthState('forgot-password')}
                         className="cursor-pointer text-blue-500 underline transition-all duration-300 hover:text-blue-500"
                     >
-                        Forgot Password
+                        Lupa Password
                     </div>
                 </div>
                 <div className="text-center">
@@ -85,12 +85,12 @@ export default function Login({ setAuthState }: LoginProps) {
             </form>
 
             <p className="text-lightblack text-center">
-                Not registered?{' '}
+                Belum registrasi?{' '}
                 <span
                     onClick={() => setAuthState('register')}
                     className="cursor-pointer  text-blue-400  underline transition-all duration-300 hover:text-blue-500"
                 >
-                    Sign up
+                    Registrasi
                 </span>
             </p>
         </div>

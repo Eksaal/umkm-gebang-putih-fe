@@ -23,7 +23,7 @@ const contacts = [
     {
         icon: <FaMessage />,
         href: 'https://docs.google.com/forms/d/e/1FAIpQLSfp3l9nSwdosAWtO4qshtqsEDoyuU1zOvsmoWbPSoDRc11LvA/viewform',
-        text: 'https://its.id/m/SurveiKepuasanUMKMGebang',
+        text: 'Survei Kepuasan',
     },
 ]
 

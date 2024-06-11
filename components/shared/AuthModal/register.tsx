@@ -39,7 +39,7 @@ export default function Register({ setAuthState }: RegisterProps) {
     return (
         <div className="mx-auto w-full max-w-[600px] space-y-[25px] rounded bg-white p-10">
             <h1 className="text-center text-[22px] font-semibold leading-7">
-                Sign up
+                Registrasi
             </h1>
 
             <form className="space-y-4" onSubmit={handleSubmit(handleForm)}>
@@ -88,12 +88,12 @@ export default function Register({ setAuthState }: RegisterProps) {
             </form>
 
             <p className="text-lightblack text-center">
-                Already registered?{' '}
+                Sudah memiliki akun?{' '}
                 <div
                     onClick={() => setAuthState('login')}
                     className="duration-30 inline-block cursor-pointer text-blue-400 underline transition-all hover:text-blue-500"
                 >
-                    Sign in
+                    Login
                 </div>
                 .
             </p>
