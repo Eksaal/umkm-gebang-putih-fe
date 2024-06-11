@@ -7,6 +7,7 @@ import * as Tabs from '@radix-ui/react-tabs'
 import { useAuthModalStore } from '@/store/useAuthModalStore'
 import Lightbox from 'react-image-lightbox'
 import 'react-image-lightbox/style.css'
+import CloudinaryImage from '../CloudinaryImage'
 import {
     FaPhoneVolume,
     FaMoneyBill,
@@ -98,8 +99,8 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                 className={`absolute left-[560px] top-20 h-[89vh] w-[540px] overflow-hidden rounded-lg bg-white shadow-lg ${isOpen ? '' : 'hidden'}`}
             >
                 {data.pictures.length > 0 && (
-                    <Image
-                        src={data.pictures[0].picture_path}
+                    <CloudinaryImage
+                        fullUrl={data.pictures[0].picture_path}
                         alt="hero-image"
                         height={200}
                         width={540}
@@ -389,13 +390,15 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                             <h3 className="pb-3 pt-5 text-lg">Foto</h3>
                             <div className="mx-auto">
                                 {data.pictures.length > 0 && (
-                                    <Image
-                                        src={data.pictures[0].menu_picture_path}
+                                    <CloudinaryImage
+                                        fullUrl={
+                                            data.pictures[0].menu_picture_path
+                                        }
                                         alt="gallery-image"
+                                        preview
                                         height={160}
                                         width={120}
                                         className="h-[160px] w-[120px] object-cover"
-                                        onClick={() => setIsView(true)}
                                     />
                                 )}
                             </div>
@@ -403,14 +406,6 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                     </Tabs.Root>
                 </div>
             </div>
-            {isView && (
-                <div className="absolute bottom-32 left-[560px] right-96 top-80 flex items-start justify-center">
-                    <Lightbox
-                        mainSrc={data.pictures[0].menu_picture_path}
-                        onCloseRequest={() => setIsView(false)}
-                    />
-                </div>
-            )}
         </>
     )
 }

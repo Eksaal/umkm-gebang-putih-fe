@@ -3,6 +3,7 @@ import * as React from 'react'
 import Image from 'next/image'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import Rating from '../Rating'
+import CloudinaryImage from '../CloudinaryImage'
 
 interface ICardProps {
     readonly id: number
@@ -30,8 +31,8 @@ const Card: React.FunctionComponent<ICardProps> = ({
             className="relative mx-auto mb-4 grid h-[218px] w-[500px] grid-cols-2 gap-3 overflow-hidden rounded-lg shadow-lg"
             onClick={() => onClick(id)}
         >
-            <Image
-                src={image[0]}
+            <CloudinaryImage
+                fullUrl={image[0]}
                 alt="hero-image"
                 height={218}
                 width={242}
