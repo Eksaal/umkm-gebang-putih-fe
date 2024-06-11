@@ -52,12 +52,14 @@ const CloudinaryImage: React.FC<CloudinaryImageProps> = ({
 
     const RESIZE_MAX_WIDTH = 1000
     const resizedToMaxWidth = mdx && +width >= RESIZE_MAX_WIDTH
+    const dynamicClasses = `max-h-[${height}] max-w-[${width}] min-h-[${height}] min-w-[${width}]`
 
     return (
         <figure
             className={clsx(className, {
                 'overflow-hidden rounded shadow dark:shadow-none': !noStyle,
                 'mx-auto w-full': mdx && +width <= 800,
+                dynamicClasses,
             })}
             style={{
                 ...(mdx && +width <= 800 ? { maxWidth: width } : {}),
