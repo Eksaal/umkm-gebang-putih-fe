@@ -1,6 +1,6 @@
 'use client'
 import * as React from 'react'
-import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Card from '../Card'
@@ -17,28 +17,38 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
     const [locations, setLocations] = useState<UmkmMeta[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
+    const [page, setPage] = useState(1)
+    const [hasMore, setHasMore] = useState(true)
+    const observer = useRef<IntersectionObserver | null>(null)
 
     const cleanType = (type: string) => type.replace(/[\[\]"]/g, '').trim()
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data: UmkmMeta[] = await getMetaUmkm()
+    const fetchData = async (page: number) => {
+        try {
+            const data: UmkmMeta[] = await getMetaUmkm(page)
+            if (data.length === 0) {
+                setHasMore(false)
+            } else {
                 const cleanedData = data.map((item) => ({
                     ...item,
                     category: cleanType(item.category),
                 }))
-                setLocations(cleanedData)
-                setLoading(false)
-            } catch (error) {
-                console.error('Error fetching UMKM data:', error)
-                setError('Failed to fetch data')
-                setLoading(false)
+                setLocations((prevLocations) => [
+                    ...prevLocations,
+                    ...cleanedData,
+                ])
             }
+            setLoading(false)
+        } catch (error) {
+            console.error('Error fetching UMKM data:', error)
+            setError('Failed to fetch data')
+            setLoading(false)
         }
+    }
 
-        fetchData()
-    }, [getMetaUmkm])
+    useEffect(() => {
+        fetchData(page)
+    }, [page])
 
     const [searchTerm, setSearchTerm] = useState<string>('')
     const [selectedType, setSelectedType] = useState<string>('All')
@@ -86,7 +96,21 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
         setIsOpen(true)
     }
 
-    if (loading) return <div>Loading...</div>
+    const lastCardRef = useCallback(
+        (node: HTMLDivElement) => {
+            if (loading) return
+            if (observer.current) observer.current.disconnect()
+            observer.current = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && hasMore) {
+                    setPage((prevPage) => prevPage + 1)
+                }
+            })
+            if (node) observer.current.observe(node)
+        },
+        [loading, hasMore],
+    )
+
+    if (loading && page === 1) return <div>Loading...</div>
     if (error) return <div>{error}</div>
 
     return (
@@ -127,19 +151,38 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
                 {filteredCards.length > 0 ? (
                     <div>
                         <h1 className="py-2 text-lg">Hasil pencarian</h1>
-                        {filteredCards.map((card, index) => (
-                            <Card
-                                key={index}
-                                id={card.id}
-                                name={card.name}
-                                rating={card.averageRating}
-                                totalUlasan={card.totalReviews}
-                                address={card.address}
-                                type={card.category}
-                                image={card.pictures}
-                                onClick={handleClick}
-                            />
-                        ))}
+                        {filteredCards.map((card, index) => {
+                            if (index === filteredCards.length - 1) {
+                                return (
+                                    <div ref={lastCardRef} key={index}>
+                                        <Card
+                                            id={card.id}
+                                            name={card.name}
+                                            rating={card.averageRating}
+                                            totalUlasan={card.totalReviews}
+                                            address={card.address}
+                                            type={card.category}
+                                            image={card.pictures}
+                                            onClick={handleClick}
+                                        />
+                                    </div>
+                                )
+                            } else {
+                                return (
+                                    <Card
+                                        key={index}
+                                        id={card.id}
+                                        name={card.name}
+                                        rating={card.averageRating}
+                                        totalUlasan={card.totalReviews}
+                                        address={card.address}
+                                        type={card.category}
+                                        image={card.pictures}
+                                        onClick={handleClick}
+                                    />
+                                )
+                            }
+                        })}
                     </div>
                 ) : (
                     <h1 className="py-2 text-lg">No results found</h1>
