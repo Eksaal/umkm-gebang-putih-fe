@@ -20,7 +20,7 @@ const config = {
         },
         extend: {
             backgroundImage: {
-                'umkm-fruit': "url('../public/homepage/bgumkm.png')",
+                'umkm': "url('../public/homepage/bakground.png')",
             }
         },
     },
