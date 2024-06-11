@@ -1,5 +1,4 @@
 'use client'
-import { buildUrl } from 'cloudinary-build-url'
 import clsx from 'clsx'
 import Image from 'next/image'
 import React, { CSSProperties, useState } from 'react'
@@ -14,8 +13,7 @@ interface AspectRatio {
 
 interface CloudinaryImageProps
     extends React.ComponentPropsWithoutRef<'figure'> {
-    publicId?: string
-    fullUrl?: string
+    fullUrl: string
     height: string | number
     width: string | number
     alt: string
@@ -30,7 +28,6 @@ interface CloudinaryImageProps
 }
 
 const CloudinaryImage: React.FC<CloudinaryImageProps> = ({
-    publicId,
     fullUrl,
     height,
     width,
@@ -47,35 +44,9 @@ const CloudinaryImage: React.FC<CloudinaryImageProps> = ({
 }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
 
-    const urlBlurred = fullUrl
-        ? `${fullUrl}?e_blur:1000,q_1`
-        : buildUrl(publicId, {
-              cloud: {
-                  cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME,
-              },
-              transformations: {
-                  effect: {
-                      name: 'blur:1000',
-                  },
-                  quality: 1,
-                  rawTransformation: aspect
-                      ? `c_fill,ar_${aspect.width}:${aspect.height},w_${width}`
-                      : undefined,
-              },
-          })
+    const urlBlurred = `${fullUrl}?e_blur:1000,q_1`
 
     const url = fullUrl
-        ? fullUrl
-        : buildUrl(publicId, {
-              cloud: {
-                  cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME,
-              },
-              transformations: {
-                  rawTransformation: aspect
-                      ? `c_fill,ar_${aspect.width}:${aspect.height},w_${width}`
-                      : undefined,
-              },
-          })
 
     const aspectRatio = aspect ? aspect.height / aspect.width : undefined
 
