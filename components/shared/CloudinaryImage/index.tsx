@@ -45,38 +45,29 @@ const CloudinaryImage: React.FC<CloudinaryImageProps> = ({
     const [isOpen, setIsOpen] = useState<boolean>(false)
 
     const urlBlurred = `${fullUrl}?e_blur:1000,q_1`
-
     const url = fullUrl
-
-    const aspectRatio = aspect ? aspect.height / aspect.width : undefined
-
-    const RESIZE_MAX_WIDTH = 1000
-    const resizedToMaxWidth = mdx && +width >= RESIZE_MAX_WIDTH
-    const dynamicClasses = `max-h-[${height}] max-w-[${width}] min-h-[${height}] min-w-[${width}]`
 
     return (
         <figure
             className={clsx(className, {
                 'overflow-hidden rounded shadow dark:shadow-none': !noStyle,
                 'mx-auto w-full': mdx && +width <= 800,
-                dynamicClasses,
             })}
             style={{
                 ...(mdx && +width <= 800 ? { maxWidth: width } : {}),
                 ...style,
+                width,
+                height,
             }}
             {...rest}
         >
             <div
                 style={{
                     position: 'relative',
-                    height: 0,
-                    paddingTop: aspectRatio
-                        ? `${aspectRatio * 100}%`
-                        : `${(+height / +width) * 100}%`,
+                    width: '100%',
+                    height: '100%',
                     cursor: preview ? 'zoom-in' : 'default',
                 }}
-                className={`img-blur h-[${height}] w-[${width}]`}
                 onClick={preview ? () => setIsOpen(true) : undefined}
             >
                 <style jsx>{`
@@ -88,31 +79,28 @@ const CloudinaryImage: React.FC<CloudinaryImageProps> = ({
                         z-index: 0;
                         background-image: url(${urlBlurred});
                         background-position: center center;
-                        background-size: 100%;
+                        background-size: cover;
                     }
                 `}</style>
                 <div
                     className={clsx(
-                        'absolute bottom-0 left-0 right-0 top-0',
+                        'absolute inset-0',
                         scale ? 'scale-150' : '',
                     )}
                 >
                     <Image
-                        width={Number(
-                            resizedToMaxWidth
-                                ? Math.min(+width, RESIZE_MAX_WIDTH)
-                                : width,
-                        )}
-                        height={Number(
-                            resizedToMaxWidth
-                                ? (RESIZE_MAX_WIDTH * +height) / +width
-                                : height,
-                        )}
+                        width={+width}
+                        height={+height}
                         unoptimized
                         src={url}
                         alt={alt}
                         title={title || alt}
                         className={clsx(scale ? 'scale-150' : '')}
+                        style={{
+                            objectFit: 'cover',
+                            width: '100%',
+                            height: '100%',
+                        }}
                     />
                 </div>
             </div>
