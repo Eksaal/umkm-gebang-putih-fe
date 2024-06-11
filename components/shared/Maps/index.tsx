@@ -52,7 +52,7 @@ const Map: React.FC<MapProps> = ({ locations }) => {
     return (
         <MapContainer
             center={[-7.282862, 112.785852]}
-            zoom={30}
+            zoom={100}
             className="fixed left-0 right-0 h-full w-full"
         >
             <TileLayer
