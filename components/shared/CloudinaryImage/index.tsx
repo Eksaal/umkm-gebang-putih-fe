@@ -43,6 +43,7 @@ const CloudinaryImage: React.FC<CloudinaryImageProps> = ({
     ...rest
 }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
     const urlBlurred = `${fullUrl}?e_blur:1000,q_1`
     const url = fullUrl
@@ -70,18 +71,20 @@ const CloudinaryImage: React.FC<CloudinaryImageProps> = ({
                 }}
                 onClick={preview ? () => setIsOpen(true) : undefined}
             >
-                <style jsx>{`
-                    .img-blur::before {
-                        content: '';
-                        position: absolute;
-                        inset: 0;
-                        filter: blur(20px);
-                        z-index: 0;
-                        background-image: url(${urlBlurred});
-                        background-position: center center;
-                        background-size: cover;
-                    }
-                `}</style>
+                {!isLoaded && (
+                    <div
+                        className="img-blur"
+                        style={{
+                            position: 'absolute',
+                            inset: 0,
+                            filter: 'blur(20px)',
+                            backgroundImage: `url(${urlBlurred})`,
+                            backgroundPosition: 'center center',
+                            backgroundSize: 'cover',
+                            zIndex: 0,
+                        }}
+                    />
+                )}
                 <div
                     className={clsx(
                         'absolute inset-0',
@@ -101,6 +104,7 @@ const CloudinaryImage: React.FC<CloudinaryImageProps> = ({
                             width: '100%',
                             height: '100%',
                         }}
+                        onLoadingComplete={() => setIsLoaded(true)}
                     />
                 </div>
             </div>
