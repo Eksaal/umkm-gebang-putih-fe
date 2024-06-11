@@ -47,9 +47,10 @@ const HomePage: React.FunctionComponent = () => {
                         <h3 className="text-4xl font-bold">Hallo Sobat!!</h3>
                         <p>
                             UMKM Gebang Putih adalah project pengembangan
-                            website berbasis lokasi sebagai pemetaan UMKM di
-                            Kelurahan Gebang Putih, Kecamatan Sukolilo Surabaya
-                            sekaligus menjadi wadah promosi UMKM yang ada.
+                            website berbasis lokasi sebagai pemetaan UMKM 
+                            makanan dan minuman di Kelurahan Gebang Putih, 
+                            Kecamatan Sukolilo Surabaya sekaligus menjadi 
+                            wadah promosi UMKM yang ada.
                         </p>
                     </div>
                     <p className="text-green-500">
