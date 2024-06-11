@@ -3,7 +3,7 @@ import React from 'react'
 import Footer from '@/components/shared/Footer'
 import Image from 'next/image'
 import BannerImage from '@/public/homepage/hero.png'
-import UmkmImage from '@/public/homepage/shop.png'
+import UmkmImage from '@/public/homepage/halo.png'
 import { BiSolidLike, BiLocationPlus, BiBowlHot } from 'react-icons/bi'
 import { useAuthModalStore } from '@/store/useAuthModalStore'
 import { useAuth } from '@/hooks/useAuth'
@@ -36,7 +36,7 @@ const HomePage: React.FunctionComponent = () => {
                         <span className="text-neutral-700">UMKM</span> GEBANG
                         PUTIH
                     </h2>
-                    <p className="pt-3 text-2xl">
+                    <p className="pt-3 text-2xl font-medium">
                         Temukan UMKM di Gebang Putih
                     </p>
                 </div>
