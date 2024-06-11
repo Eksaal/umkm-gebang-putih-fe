@@ -31,12 +31,12 @@ const HomePage: React.FunctionComponent = () => {
                     height={240}
                     width={1180}
                 />
-                <div className="absolute left-10 top-35 text-white">
+                <div className="absolute left-10 top-60 text-white">
                     <h2 className="text-5xl font-extrabold">
                         <span className="text-neutral-700">UMKM</span> GEBANG
                         PUTIH
                     </h2>
-                    <p className="pt-4 text-2xl text-500">
+                    <p className="pt-5 text-2xl text-500">
                         Temukan UMKM di Gebang Putih
                     </p>
                 </div>
