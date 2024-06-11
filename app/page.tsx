@@ -2,7 +2,7 @@
 import React from 'react'
 import Footer from '@/components/shared/Footer'
 import Image from 'next/image'
-import BannerImage from '@/public/homepage/heroo.png'
+import BannerImage from '@/public/homepage/hero.png'
 import UmkmImage from '@/public/homepage/halo.png'
 import { BiSolidLike, BiLocationPlus, BiBowlHot } from 'react-icons/bi'
 import { useAuthModalStore } from '@/store/useAuthModalStore'
