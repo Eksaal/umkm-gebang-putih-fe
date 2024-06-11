@@ -1,12 +1,11 @@
 'use client'
-import * as React from 'react'
-import { useState, useEffect, useMemo, useCallback, useRef } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { useRouter, useSearchParams } from 'next/navigation'
-import Card from '../Card'
 import { useUmkm } from '@/hooks/useUMKM'
 import { UmkmMeta } from '@/app/umkm/page'
 import DetilModal from '../DetailModal'
+import Card from '../Card'
 
 interface ISidebarProps {}
 
@@ -15,23 +14,25 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [selectedId, setSelectedId] = useState<number>(0)
     const [locations, setLocations] = useState<UmkmMeta[]>([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState<string | null>(null)
     const [page, setPage] = useState(1)
+    const [limit] = useState(3) // Adjust the limit as needed
+    const [loading, setLoading] = useState(true)
     const [hasMore, setHasMore] = useState(true)
-    const observer = useRef<IntersectionObserver | null>(null)
+    const [searchTerm, setSearchTerm] = useState<string>('')
+    const [selectedType, setSelectedType] = useState<string>('All')
+
+    const router = useRouter()
+    const searchParams = useSearchParams()
 
     const cleanType = (type: string) => type.replace(/[\[\]"]/g, '').trim()
 
-    const fetchData = async (page: number) => {
+    const fetchData = async (page: number, limit: number) => {
         try {
-            const datarum: any = await getMetaUmkm(page, 3)
-            const data = datarum.data
-
+            const data: UmkmMeta[] = await getMetaUmkm(page, limit)
             if (data.length === 0) {
                 setHasMore(false)
             } else {
-                const cleanedData = data.map((item: any) => ({
+                const cleanedData = data.map((item) => ({
                     ...item,
                     category: cleanType(item.category),
                 }))
@@ -43,20 +44,14 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
             setLoading(false)
         } catch (error) {
             console.error('Error fetching UMKM data:', error)
-            setError('Failed to fetch data')
             setLoading(false)
         }
     }
 
     useEffect(() => {
-        fetchData(page)
-    }, [page])
-
-    const [searchTerm, setSearchTerm] = useState<string>('')
-    const [selectedType, setSelectedType] = useState<string>('All')
-
-    const router = useRouter()
-    const searchParams = useSearchParams()
+        // Initial fetch with high priority
+        fetchData(1, limit)
+    }, [])
 
     useEffect(() => {
         const search = searchParams.get('search') || ''
@@ -77,43 +72,35 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
         router.replace(`?${queryString}`, undefined)
     }, [searchTerm, selectedType, router])
 
-    const debouncedSetSearchTerm = useCallback(
-        debounce((value: string) => setSearchTerm(value), 300),
-        [],
-    )
-
-    const filteredCards = useMemo(() => {
-        return locations.filter((card) => {
-            const matchesName = card.name
-                .toLowerCase()
-                .includes(searchTerm.toLowerCase())
-            const matchesType =
-                selectedType === 'All' || card.category === selectedType
-            return matchesName && matchesType
-        })
-    }, [locations, searchTerm, selectedType])
+    const filteredCards = locations.filter((card) => {
+        const matchesName = card.name
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())
+        const matchesType =
+            selectedType === 'All' || card.category === selectedType
+        return matchesName && matchesType
+    })
 
     const handleClick = (id: number) => {
         setSelectedId(id)
         setIsOpen(true)
     }
 
-    const lastCardRef = useCallback(
+    const observer = useRef<IntersectionObserver | null>(null)
+    const lastElementRef = useCallback(
         (node: HTMLDivElement) => {
             if (loading) return
             if (observer.current) observer.current.disconnect()
             observer.current = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting && hasMore) {
                     setPage((prevPage) => prevPage + 1)
+                    fetchData(page + 1, limit)
                 }
             })
             if (node) observer.current.observe(node)
         },
-        [loading, hasMore],
+        [loading, hasMore, page, limit],
     )
-
-    if (loading && page === 1) return <div>Loading...</div>
-    if (error) return <div>{error}</div>
 
     return (
         <div
@@ -129,7 +116,8 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
                     <input
                         type="text"
                         placeholder="Search by name..."
-                        onChange={(e) => debouncedSetSearchTerm(e.target.value)}
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full rounded-xl bg-white p-2 pl-10 shadow-md"
                     />
                     <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400" />
@@ -153,41 +141,30 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
                 {filteredCards.length > 0 ? (
                     <div>
                         <h1 className="py-2 text-lg">Hasil pencarian</h1>
-                        {filteredCards.map((card, index) => {
-                            if (index === filteredCards.length - 1) {
-                                return (
-                                    <div ref={lastCardRef} key={index}>
-                                        <Card
-                                            id={card.id}
-                                            name={card.name}
-                                            rating={card.averageRating}
-                                            totalUlasan={card.totalReviews}
-                                            address={card.address}
-                                            type={card.category}
-                                            image={card.pictures}
-                                            onClick={handleClick}
-                                        />
-                                    </div>
-                                )
-                            } else {
-                                return (
-                                    <Card
-                                        key={index}
-                                        id={card.id}
-                                        name={card.name}
-                                        rating={card.averageRating}
-                                        totalUlasan={card.totalReviews}
-                                        address={card.address}
-                                        type={card.category}
-                                        image={card.pictures}
-                                        onClick={handleClick}
-                                    />
-                                )
-                            }
-                        })}
+                        {filteredCards.map((card, index) => (
+                            <div
+                                key={index}
+                                ref={
+                                    index === filteredCards.length - 1
+                                        ? lastElementRef
+                                        : null
+                                }
+                            >
+                                <Card
+                                    id={card.id}
+                                    name={card.name}
+                                    rating={card.averageRating}
+                                    totalUlasan={card.totalReviews}
+                                    address={card.address}
+                                    type={card.category}
+                                    image={card.pictures}
+                                    onClick={() => handleClick(card.id)}
+                                />
+                            </div>
+                        ))}
                     </div>
                 ) : (
-                    <h1 className="py-2 text-lg">No results found</h1>
+                    <h1 className="py-2 text-lg"></h1>
                 )}
             </div>
         </div>
@@ -195,15 +172,3 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
 }
 
 export default Sidebar
-
-// Debounce function
-function debounce(func: (...args: any[]) => void, wait: number) {
-    let timeout: NodeJS.Timeout | null = null
-    return function (...args: any[]) {
-        if (timeout) clearTimeout(timeout)
-        timeout = setTimeout(() => {
-            timeout = null
-            func(...args)
-        }, wait)
-    }
-}
