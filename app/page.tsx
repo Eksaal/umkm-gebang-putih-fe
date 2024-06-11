@@ -31,7 +31,7 @@ const HomePage: React.FunctionComponent = () => {
                     height={240}
                     width={1180}
                 />
-                <div className="absolute left-10 top-38 text-white">
+                <div className="absolute left-10 top-30 text-white">
                     <h2 className="text-5xl font-extrabold">
                         <span className="text-neutral-700">UMKM</span> GEBANG
                         PUTIH
