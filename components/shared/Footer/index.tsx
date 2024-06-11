@@ -13,7 +13,7 @@ const contacts = [
     {
         icon: <FaPhone />,
         href: 'https://wa.me/6282250907901',
-        text: '+62 822 5090 7901',
+        text: '+62 817 7574 7576',
     },
     {
         icon: <FaEnvelope />,
