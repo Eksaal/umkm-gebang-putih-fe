@@ -31,7 +31,7 @@ const Home: React.FC = () => {
 
     const fetchData = async (page: number) => {
         try {
-            const datarumm: any = await getMetaUmkm(page)
+            const datarumm: any = await getMetaUmkm(page, 100)
             const data = datarumm.data
             console.log(datarumm.data)
 

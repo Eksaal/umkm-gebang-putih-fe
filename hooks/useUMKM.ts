@@ -1,9 +1,9 @@
 import axios from '@/lib/axios';
 
 export const useUmkm = () => {
-    const getMetaUmkm = async (page: number) => {
+    const getMetaUmkm = async (page: number, limit: number) => {
         try {
-            const response = await axios.get('/umkm', { params: { page } });
+            const response = await axios.get('/umkm', { params: { page, limit } });
             return response.data.data;
         } catch (error) {
             console.error('Failed to fetch data', error);
