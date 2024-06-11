@@ -36,7 +36,7 @@ const HomePage: React.FunctionComponent = () => {
                         <span className="text-neutral-700">UMKM</span> GEBANG
                         PUTIH
                     </h2>
-                    <p className="pt-3 text-2xl text-500">
+                    <p className="pt-2 text-2xl text-500">
                         Temukan UMKM di Gebang Putih
                     </p>
                 </div>
