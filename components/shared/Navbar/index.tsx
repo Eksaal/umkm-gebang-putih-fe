@@ -60,6 +60,7 @@ export default function Navbar() {
 }
 
 const navlinks = [
-    { label: 'Home', href: '/' },
-    { label: 'UMKM', href: '/umkm' },
+    { label: 'Panduan', href: 'https://drive.google.com/file/d/1YIPS9iC47LRJGaj0fBfrNF9oZjjYst5c/view'},
+    { label: 'Beranda', href: '/' },
+    { label: 'Peta', href: '/umkm' },
 ]
