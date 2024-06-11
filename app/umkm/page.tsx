@@ -31,7 +31,11 @@ const Home: React.FC = () => {
 
     const fetchData = async (page: number) => {
         try {
-            const data: UmkmMeta[] = await getMetaUmkm(page)
+            const datarumm: any = await getMetaUmkm(page)
+            const data = datarumm.data
+            console.log(datarumm.data)
+
+            console.log(data)
             if (data.length === 0) {
                 setHasMore(false)
             } else {

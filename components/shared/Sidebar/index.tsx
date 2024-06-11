@@ -25,7 +25,9 @@ const Sidebar: React.FunctionComponent<ISidebarProps> = () => {
 
     const fetchData = async (page: number) => {
         try {
-            const data: UmkmMeta[] = await getMetaUmkm(page)
+            const datarum: any = await getMetaUmkm(page)
+            const data = datarum.data
+
             if (data.length === 0) {
                 setHasMore(false)
             } else {
