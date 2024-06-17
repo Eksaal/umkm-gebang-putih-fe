@@ -104,7 +104,7 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                         alt="hero-image"
                         height={200}
                         width={540}
-                        className="h-[200px] w-[540px] object-cover"
+                        className="min-h-[200px] min-w-[540px] object-cover"
                     />
                 )}
 
@@ -398,7 +398,7 @@ const DetilModal: React.FC<IDetilModalProps> = ({ id, isOpen, onClose }) => {
                                         preview
                                         height={160}
                                         width={120}
-                                        className="h-[160px] w-[120px] object-cover"
+                                        className="min-h-[160px] min-w-[120px] object-cover"
                                     />
                                 )}
                             </div>

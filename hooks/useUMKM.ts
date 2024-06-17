@@ -1,34 +1,36 @@
 import axios from '@/lib/axios';
 
 export const useUmkm = () => {
-    const getMetaUmkm = async () => {
+    const getMetaUmkm = async (page: number, limit: number) => {
         try {
-            const response = await axios.get('/umkm');
+            const response = await axios.get('/umkm', { params: { page, limit } });
             return response.data.data;
         } catch (error) {
-            console.error('Failed to store data', error);
-            return null;
+            console.error('Failed to fetch data', error);
+            return [];
         }
     };
-    const getUmkm = async (id:number) => {
+
+    const getUmkm = async (id: number) => {
         try {
             const response = await axios.get(`/umkm/${id}`);
             return response.data;
         } catch (error) {
-            console.error('Failed to store data', error);
+            console.error('Failed to fetch data', error);
             return null;
         }
     };
 
-    const postReview = async (data : any) => {
+    const postReview = async (data: any) => {
         try {
             const response = await axios.post('/reviewers', data);
             return response.data;
         } catch (error) {
-            console.error('Failed to store data', error);
+            console.error('Failed to post data', error);
             return null;
         }
     };
+
     return {
         getMetaUmkm,
         getUmkm,

@@ -36,7 +36,7 @@ const Card: React.FunctionComponent<ICardProps> = ({
                 alt="hero-image"
                 height={218}
                 width={242}
-                className="h-[218px] w-[242px] object-cover"
+                className="min-h-[218px] min-w-[242px] object-cover"
             />
             <div className="flex flex-col justify-between px-4 py-4">
                 <h2 className="text-xl font-bold uppercase">{name}</h2>
