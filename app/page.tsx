@@ -63,8 +63,8 @@ const HomePage: React.FunctionComponent = () => {
                     <Image
                         src={UmkmImage}
                         alt="hero-image"
-                        height={420}
-                        width={536}
+                        height={320}
+                        width={330}
                         className="w-full"
                     />
                 </div>
