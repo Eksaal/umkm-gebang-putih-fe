@@ -29,19 +29,19 @@ const contacts = [
 
 export default function Footer() {
     return (
-        <footer className="grid grid-cols-3 items-center gap-16 bg-green-100 px-[130px] py-10">
-            <div className=" mt-4">
-                <h5 className="text-uppercase text-lg font-bold">
+        <footer className="grid grid-cols-1 md:grid-cols-3 items-start gap-8 bg-green-100 p-8 md:px-16 md:py-10">
+            <div className="mt-4">
+                <h5 className="text-lg font-bold">
                     Tentang Kami
                 </h5>
-                <p className="text-muted">
+                <p className="text-gray-700">
                     UMKM Gebang Putih adalah platform yang bertujuan untuk
                     membantu UMKM lokal dalam memasarkan produk mereka secara
                     online.
                 </p>
             </div>
-            <div className="kontak-kami mt-4">
-                <h5 className="text-uppercase text-lg font-bold">
+            <div className="mt-4">
+                <h5 className="text-lg font-bold">
                     Kontak Kami
                 </h5>
                 <ul className="list-unstyled space-y-2">
@@ -60,11 +60,11 @@ export default function Footer() {
                     ))}
                 </ul>
             </div>
-            <div className="">
+            <div className="flex justify-center md:justify-end mt-4">
                 <Image
                     src={'/homepage/logo.svg'}
-                    width={464}
-                    height={70}
+                    width={232}
+                    height={35}
                     alt="logo"
                 />
             </div>
