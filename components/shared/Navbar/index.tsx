@@ -1,67 +1,83 @@
 'use client'
-import React from 'react'
-import AuthModal from '@/components/shared/AuthModal'
-import { Button } from '@/components/ui/button'
-import NavLinks from '@/components/shared/links/Navlinks'
-import { useAuthModalStore } from '@/store/useAuthModalStore'
-import { useAuth } from '@/hooks/useAuth'
+import React, { useState, useEffect } from 'react'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import L from 'leaflet'
 import { useRouter } from 'next/navigation'
-import Image from 'next/image'
+import 'leaflet/dist/leaflet.css'
+import '@fortawesome/fontawesome-free/css/all.min.css'
+import { UmkmMeta } from '@/app/umkm/page'
 
-export default function Navbar() {
-    const { logout, loggedIn } = useAuth()
-    const { openModal } = useAuthModalStore()
-    const router = useRouter()
-
-    const handleOpenModal = () => {
-        openModal('login')
-    }
-
-    const handleLogout = () => {
-        logout()
-        router.refresh()
-    }
-
-    return (
-        <nav className="fixed z-50 flex h-16 w-full items-center bg-green-100 px-4 md:px-16">
-            <h2 className="text-xl font-extrabold">
-                <Image
-                    src={'/homepage/logo.png'}
-                    width={11}
-                    height={7}
-                    alt="logo"
-                    className="inline-block align-text-top mr-2" 
-                    style={{ marginLeft: '20px', marginTop: '6px' }}
-                />
-                <span className="text-green-500">UMKM</span> GEBANG PUTIH
-            </h2>
-            <div className="ml-auto flex items-center space-x-4 md:space-x-9">
-                {navlinks.map((link, index) => (
-                    <NavLinks key={index} href={link.href} label={link.label} />
-                ))}
-                {loggedIn ? (
-                    <Button
-                        onClick={handleLogout}
-                        className="rounded-full bg-green-500 px-3 md:px-5 font-semibold text-white hover:bg-green-400 text-sm py-2"
-                    >
-                        Logout
-                    </Button>
-                ) : (
-                    <Button
-                        onClick={handleOpenModal}
-                        className="rounded-full bg-green-500 px-3 md:px-5 font-semibold text-white hover:bg-green-400 text-sm py-2"
-                    >
-                        Login
-                    </Button>
-                )}
-            </div>
-            <AuthModal />
-        </nav>
-    )
+interface MapProps {
+locations: UmkmMeta[]
 }
 
-const navlinks = [
-    { label: 'Panduan', href: 'https://drive.google.com/file/d/1YIPS9iC47LRJGaj0fBfrNF9oZjjYst5c/view' },
-    { label: 'Beranda', href: '/' },
-    { label: 'Peta', href: '/umkm' },
-]
+const createCustomIcon = (color: string, name: string) => {
+return L.divIcon({
+html: <div style="font-size: 16px; text-align: center;"><i class="fas fa-map-marker-alt" style="color: ${color}; font-size: 18px;"></i><br/><span style="font-size: 10px; white-space: nowrap; display: block; margin: 0 auto; color: black;">${name}</span></div>,
+className: '',
+})
+}
+
+const Map: React.FC<MapProps> = ({ locations }) => {
+const router = useRouter()
+const [searchTerm, setSearchTerm] = useState<string>('')
+const [selectedType, setSelectedType] = useState<string>('All')
+
+typescript
+Copy code
+const searchParamss = new URLSearchParams(window.location.search)
+useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search)
+    const search = searchParams.get('search') || ''
+    const type = searchParams.get('type') || 'All'
+    setSearchTerm(search)
+    setSelectedType(type)
+}, [searchParamss])
+
+const cleanType = (type: string) => type.replace(/[\[\]"]/g, '').trim()
+
+const filteredLocations = locations.filter((location) => {
+    const matchesName = location.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    const cleanedType = cleanType(location.category)
+    const matchesType =
+        selectedType === 'All' || cleanedType === selectedType
+    return matchesName && matchesType
+})
+
+const handleMarkerClick = (name: string) => {
+    const searchUrl = `/umkm?search=${encodeURIComponent(name)}`
+    router.push(searchUrl)
+}
+
+return (
+    <MapContainer
+        center={[-7.282862, 112.785852]}
+        zoom={100}
+        className="fixed left-0 right-0 h-full w-full"
+    >
+        <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        {filteredLocations.map((location) => (
+            <Marker
+                key={location.id}
+                icon={createCustomIcon(
+                    location.category === 'Makanan' ? 'red' : 'green',
+                    location.name,
+                )}
+                position={[location.latitude, location.longitude]}
+                eventHandlers={{
+                    click: () => handleMarkerClick(location.name),
+                }}
+            >
+                <Popup>{location.name}</Popup>
+            </Marker>
+        ))}
+    </MapContainer>
+)
+}
+
+export default Map
