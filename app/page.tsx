@@ -30,7 +30,6 @@ const HomePage: React.FunctionComponent = () => {
                     alt="hero-image"
                     height={240}
                     width={1180}
-                    className="w-full"
                 />
                 <div className="absolute left-4 top-20 sm:left-10 sm:top-40 text-white">
                     <h2 className="text-3xl sm:text-5xl font-extrabold">
