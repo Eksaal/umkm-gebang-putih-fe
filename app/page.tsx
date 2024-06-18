@@ -59,7 +59,7 @@ const HomePage: React.FunctionComponent = () => {
                         setiap UMKMnya!!
                     </p>
                 </section>
-                <div className="w-full sm:w-1/2">
+                <div className="sm:w-1/2">
                     <Image
                         src={UmkmImage}
                         alt="hero-image"
