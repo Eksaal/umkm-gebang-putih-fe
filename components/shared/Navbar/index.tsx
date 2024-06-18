@@ -16,39 +16,40 @@ export default function Navbar() {
     const handleOpenModal = () => {
         openModal('login')
     }
-    
+
     const handleLogout = () => {
         logout()
         router.refresh()
     }
-    
+
     return (
-        <nav className="fixed z-50 flex h-16 w-full items-center bg-green-100 px-16">
+        <nav className="fixed z-50 flex h-16 w-full items-center bg-green-100 px-4 md:px-16">
             <h2 className="text-xl font-extrabold">
                 <Image
                     src={'/homepage/logo.png'}
                     width={11}
                     height={7}
                     alt="logo"
-                    className="inline-block align-text-top mr-2" style={{marginLeft:'20px', marginTop:'6px'}}
+                    className="inline-block align-text-top mr-2" 
+                    style={{ marginLeft: '20px', marginTop: '6px' }}
                 />
                 <span className="text-green-500">UMKM</span> GEBANG PUTIH
             </h2>
-            <div className="ml-auto flex items-center space-x-9">
+            <div className="ml-auto flex items-center space-x-4 md:space-x-9">
                 {navlinks.map((link, index) => (
                     <NavLinks key={index} href={link.href} label={link.label} />
                 ))}
                 {loggedIn ? (
                     <Button
                         onClick={handleLogout}
-                        className="rounded-full bg-green-500 px-5 font-semibold text-white hover:bg-green-400 text-sm py-2"
+                        className="rounded-full bg-green-500 px-3 md:px-5 font-semibold text-white hover:bg-green-400 text-sm py-2"
                     >
                         Logout
                     </Button>
                 ) : (
                     <Button
                         onClick={handleOpenModal}
-                        className="rounded-full bg-green-500 px-5 font-semibold text-white hover:bg-green-400 text-sm py-2"
+                        className="rounded-full bg-green-500 px-3 md:px-5 font-semibold text-white hover:bg-green-400 text-sm py-2"
                     >
                         Login
                     </Button>
@@ -57,7 +58,6 @@ export default function Navbar() {
             <AuthModal />
         </nav>
     )
-    
 }
 
 const navlinks = [
