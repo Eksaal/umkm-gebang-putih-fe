@@ -52,7 +52,7 @@ const handleMarkerClick = (name: string) => {
 return (
     <MapContainer
         center={[-7.282862, 112.785852]}
-        zoom={100}
+        zoom={15}
         className="fixed left-0 right-0 h-full w-full"
     >
         <TileLayer
