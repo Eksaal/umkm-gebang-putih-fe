@@ -24,7 +24,7 @@ const HomePage: React.FunctionComponent = () => {
 
     return (
         <main className="min-h-screen space-y-12 pt-16">
-            <section className="relative mx-auto max-w-[1180px] pt-16 px-4 sm:px-8">
+            <section className="relative mx-auto max-w-7xl pt-16 px-4 sm:px-8">
                 <Image
                     src={BannerImage}
                     alt="hero-image"
@@ -34,8 +34,7 @@ const HomePage: React.FunctionComponent = () => {
                 />
                 <div className="absolute left-4 top-20 sm:left-10 sm:top-40 text-white">
                     <h2 className="text-3xl sm:text-5xl font-extrabold">
-                        <span className="text-neutral-700">UMKM</span> GEBANG
-                        PUTIH
+                        <span className="text-neutral-700">UMKM</span> GEBANG PUTIH
                     </h2>
                     <p className="pt-3 text-lg sm:text-2xl text-500">
                         Temukan UMKM di Gebang Putih
@@ -59,13 +58,13 @@ const HomePage: React.FunctionComponent = () => {
                         setiap UMKMnya!!
                     </p>
                 </section>
-                <div className="w-full sm:w-1/2">
-                    <Image
+                <div className="sm:w-1/2" style={{marginLeft:"200px"}}>
+                    <Image 
                         src={UmkmImage}
                         alt="hero-image"
-                        height={320}
-                        width={330}
-                        className="w-full"
+                        height={400}
+                        width={410}
+                        className="h-auto"
                     />
                 </div>
             </section>
@@ -90,7 +89,7 @@ const HomePage: React.FunctionComponent = () => {
                         </div>
                     ))}
                 </div>
-                <div className="mt-10 flex flex-col sm:flex-row h-80 items-center justify-center bg-umkm bg-cover px-4 sm:px-60">
+                <div className="mt-10 flex flex-col sm:flex-row h-auto items-center justify-center bg-umkm bg-cover px-4 sm:px-60 py-8 sm:py-16">
                     <div className="w-full sm:w-1/3 mb-4 sm:mb-0">
                         <button
                             onClick={handleDaftarUmkm}
