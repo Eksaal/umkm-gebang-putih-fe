@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import AuthModal from '@/components/shared/AuthModal'
 import { Button } from '@/components/ui/button'
 import NavLinks from '@/components/shared/links/Navlinks'
@@ -12,6 +12,8 @@ export default function Navbar() {
     const { logout, loggedIn } = useAuth()
     const { openModal } = useAuthModalStore()
     const router = useRouter()
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
 
     const handleOpenModal = () => {
         openModal('login')
@@ -21,42 +23,102 @@ export default function Navbar() {
         logout()
         router.refresh()
     }
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
+
+
 
     return (
-        <nav className="fixed z-50 flex h-16 w-full items-center bg-green-100 px-4 md:px-16">
-            <h2 className="text-xl font-extrabold">
-                <Image
-                    src={'/homepage/logo.png'}
-                    width={11}
-                    height={7}
-                    alt="logo"
-                    className="inline-block align-text-top mr-2" 
-                    style={{ marginLeft: '20px', marginTop: '6px' }}
-                />
-                <span className="text-green-500">UMKM</span> GEBANG PUTIH
-            </h2>
-            <div className="ml-auto flex items-center space-x-4 md:space-x-9">
-                {navlinks.map((link, index) => (
-                    <NavLinks key={index} href={link.href} label={link.label} />
-                ))}
-                {loggedIn ? (
-                    <Button
-                        onClick={handleLogout}
-                        className="rounded-full bg-green-500 px-3 md:px-5 font-semibold text-white hover:bg-green-400 text-sm py-2"
+        <nav className="fixed z-50 w-full bg-green-100 shadow-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between h-16 items-center">
+                <div className="flex-shrink-0">
+                    <div className="flex items-center">
+                        <Image
+                            src={'/homepage/logo.png'}
+                            width={11}
+                            height={9}
+                            alt="logo"
+                            className="inline-block align-text-top mr-2"
+                        />
+                        <h2 className="text-base md:text-xl font-extrabold text-green-500">UMKM GEBANG PUTIH</h2>
+                    </div>
+                </div>
+                {/* Navigasi link dan tombol login/logout */}
+                <div className="hidden md:flex ml-auto items-center space-x-2 md:space-x-4">
+                    {navlinks.map((link, index) => (
+                        <NavLinks key={index} href={link.href} label={link.label} />
+                    ))}
+                    {/* Tombol login/logout */}
+                    {loggedIn ? (
+                        <Button
+                            onClick={handleLogout}
+                            className="rounded-full bg-green-500 px-3 py-1 md:px-5 md:py-2 font-semibold text-white hover:bg-green-600 text-xs md:text-sm"
+                        >
+                            Logout
+                        </Button>
+                    ) : (
+                        <Button
+                            onClick={handleOpenModal}
+                            className="rounded-full bg-green-500 px-3 py-1 md:px-5 md:py-2 font-semibold text-white hover:bg-green-600 text-xs md:text-sm"
+                        >
+                            Login
+                        </Button>
+                    )}
+                </div>
+                {/* Tombol dropdown untuk mobile */}
+                <div className="md:hidden">
+                    <button
+                        onClick={toggleDropdown}
+                        className="flex items-center px-3 py-2 rounded-full bg-green-500 text-white"
                     >
-                        Logout
-                    </Button>
-                ) : (
-                    <Button
-                        onClick={handleOpenModal}
-                        className="rounded-full bg-green-500 px-3 md:px-5 font-semibold text-white hover:bg-green-400 text-sm py-2"
-                    >
-                        Login
-                    </Button>
-                )}
+                        <svg
+                            className="h-4 w-4 fill-current"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                d="M2.75 5.75a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm0 4.5a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm0 4.5a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm8-9a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm0 4.5a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm0 4.5a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm-8-9a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm0 4.5a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm0 4.5a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"
+                                clipRule="evenodd"
+                            />
+                        </svg>
+                    </button>
+                    {/* Dropdown menu */}
+                    {isDropdownOpen && (
+                        <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg overflow-hidden">
+                            {navlinks.map((link, index) => (
+                                <NavLinks
+                                    key={index}
+                                    href={link.href}
+                                    label={link.label}
+                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100"
+                                />
+                            ))}
+                            {loggedIn ? (
+                                <Button
+                                    onClick={handleLogout}
+                                    className="w-full bg-green-500 text-left px-4 py-2 text-sm text-black-700 hover:bg-green-100"
+                                >
+                                    Logout
+                                </Button>
+                            ) : (
+                                <Button
+                                    onClick={handleOpenModal}
+                                    className="w-full bg-green-500 text-left px-4 py-2 text-sm text-black-700 hover:bg-green-100"
+                                >
+                                    Login
+                                </Button>
+                            )}
+                        </div>
+                    )}
+                </div>
             </div>
-            <AuthModal />
-        </nav>
+        </div>
+        <AuthModal />
+    </nav>
     )
 }
 
